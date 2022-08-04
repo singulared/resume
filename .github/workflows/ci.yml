@@ -27,5 +27,12 @@ jobs:
         args: --all-features
     - name: Build docs
       run: cargo doc --no-deps --verbose
-    - name:
+    - name: Check docs
+      run: ls -alh target/doc/
+
+  deploy:
+    runs-on: ubuntu-latest
+    steps:
+    - uses: actions/checkout@v3
+    - name: Check docs
       run: ls -alh target/doc/
