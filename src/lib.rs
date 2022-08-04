@@ -84,7 +84,7 @@ pub mod work {
         /// The media portal using this collected information can set up some access limits.
         /// These restrictions can be overcome by users after successful payment.
         #[derive(CleanupDocs)]
-        #[deprecated(since = "2017", note = "Closed")]
+        #[deprecated(since = "2017.1.1", note = "Closed")]
         pub struct Paywall;
         /// Python developer in Paywall
         ///
@@ -109,7 +109,7 @@ pub mod work {
 
         /// The system allows mobile users to disable advertisements for some small payments.
         #[derive(CleanupDocs)]
-        #[deprecated(since = "2017", note = "Closed")]
+        #[deprecated(since = "2017.1.1", note = "Closed")]
         pub struct AdBlock;
         /// This project uses [Paywall] architecture and shares some codebases.
         impl<'period, 'f2016, 't2017, Language> Developer<Language> for &'period AdBlock
@@ -127,7 +127,7 @@ pub mod work {
 
         /// Video recommendation [platform](https://web.archive.org/web/20180119134125/https://video.rambler.ru/).
         #[derive(CleanupDocs)]
-        #[deprecated(since = "2018", note = "Closed")]
+        #[deprecated(since = "2018.1.1", note = "Closed")]
         pub struct Video;
         /// Migration to Python 3.6 bugfix and codebase support.
         impl<'period, 'in2017, Language> Developer<Language> for &'period Video
@@ -488,4 +488,8 @@ pub enum OpenSource {
     Hitbox,
     /// AioRiak documentation
     AioRiak,
+}
+
+pub mod opensource {
+    pub struct Hitbox;
 }
