@@ -27,10 +27,6 @@ jobs:
         args: --all-features
     - name: Build docs
       run: cargo doc --no-deps --verbose
-    - name: Check docs
-      run: ls -alh target/doc/
-    - name: Install deps
-      run: sudo apt install rsync openssh-client
     - name: SSH setup
       env:
         DEPLOY_KEY: ${{ secrets.DEPLOYMENT_KEY }}
@@ -41,7 +37,6 @@ jobs:
         echo "${DEPLOY_KEY}" > ~/.ssh/id_ed25519.ci
         echo "IdentityFile ~/.ssh/id_ed25519.ci" >> ~/.ssh/config
         chmod -R 700 ~/.ssh
-        cat ~/.ssh/known_hosts
     - name: Rsync deployment
       env:
         DEPLOYMENT_USER: ${{ secrets.DEPLOYMENT_USER }}
