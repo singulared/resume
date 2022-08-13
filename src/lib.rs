@@ -11,18 +11,6 @@
 #[doc(hidden)]
 pub use resume_macro::CleanupDocs;
 
-/// Main function docs
-#[doc(hidden)]
-pub fn main() {}
-
-/// Opensource doc
-/// This is an example of a footnote[^note].
-///
-/// [^note]: This text is the contents of the footnote, which will be rendered
-///    towards the bottom.
-#[doc(hidden)]
-pub trait Test {}
-
 /// [@singulared](https://t.me/singulared)
 pub const TELEGRAM: &str = "@singulared";
 
@@ -58,11 +46,17 @@ pub mod work {
     /// Work timeline since 2008
     #[derive(CleanupDocs)]
     pub enum WorkHistory {
-        /// [Rambler:](self::Rambler) 2015 - 2022
+        /// [Rambler:](self::Rambler) *2015 - 2022*  
+        /// Team-lead, Rust and Python developer
         Rambler(News, MediaUp, Weather, Video, Paywall, AdBlock),
-        /// [AnjLab:](self::AnjLab) 2010 - 2015
+        /// [AnjLab:](self::AnjLab) *2010 - 2015*  
+        /// Software engineer
         Anjlab(FlightMonitor, FlightMap, CloudCube, Satago),
-        /// [KayCom:](self::KayCom) 2008 - 2010
+        /// [Vladimir State University:](https://www.vlsu.ru/) *2012 - 2014*  
+        /// Lecturer in computer science and cryptography
+        VLSU,
+        /// [KayCom:](self::KayCom) *2008 - 2010*  
+        /// PHP and JS full-stack developer
         KayCom(PosterShop, CyberRead),
     }
 
@@ -457,7 +451,7 @@ impl CRDT for Me {}
 /// And now i develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
 /// SBC platforms like NVidia Jetson Nano.
 impl EmbeddedSystems for Me {}
-/// As Ph.D student i really interesting in Cryptography and wrote Ph.D dissertation about SMT
+/// As Ph.D student i really interested in Cryptography and wrote Ph.D dissertation about SMT
 /// algorithms.
 impl Cryptography for Me {}
 
@@ -480,16 +474,31 @@ impl Tennis for Me {}
 impl CTF for Me {}
 
 /// Education history
-pub enum EducationHistory {}
+#[derive(CleanupDocs)]
+pub enum EducationHistory {
+    /// *2011 - 2014* Ph.D. Student (System analysis, management, and information processing)  
+    /// Vladimir State University named after Alexander and Nikolay Stoletovs
+    PhDStudent,
+    /// *2006 - 2011* Information Security Specialist (Complex security of information objects)  
+    /// Vladimir State University named after Alexander and Nikolay Stoletovs
+    Specialist,
+}
 
 /// Opensource projects
 pub enum OpenSource {
     /// Hitbox documentation
-    Hitbox,
+    Hitbox(opensource::Hitbox),
     /// AioRiak documentation
     AioRiak,
 }
 
+/// Opensource projects and contributions
 pub mod opensource {
+    use resume_macro::CleanupDocs;
+
+    #[derive(CleanupDocs)]
     pub struct Hitbox;
+
+    #[derive(CleanupDocs)]
+    pub struct AioRiak;
 }
