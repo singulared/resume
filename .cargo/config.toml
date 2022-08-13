@@ -1,2 +1,2 @@
 [build]
-rustdocflags = ["--html-in-header=analytics.html"]
+rustdocflags = ["--html-in-header=analytics.html", "--extend-css=no-blanket.css"]
