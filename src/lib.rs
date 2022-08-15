@@ -8,6 +8,8 @@
 //! # Maxim Belousov
 //! Rustacean, Crypto-anarchist and Techno-punk.
 
+use conferences::{roles::ProgramDirector, PyCon2021, RustCon2021, RustCon2022, DevConf2016, MoscowRustMeetup2021, MoscowPythonMeetup2016, RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers};
+use opensource::{Author, Contributor};
 #[doc(hidden)]
 pub use resume_macro::CleanupDocs;
 
@@ -133,7 +135,7 @@ pub mod work {
         /// Python was a main programming language on this project.
         impl Python for Video {}
 
-        /// One of the biggest [news aggregators and news platform](https://news.rambler.ru) in Russia.
+        /// One of the biggest [news aggregator and news platform](https://news.rambler.ru) in Russia.
         ///
         /// When I started on this project (2017) it was mostly python applications with classical legacy project problems:
         /// * High costs of development and support
@@ -432,8 +434,8 @@ impl TechnicalInterests for Me {}
 /// Started interesting in Rust in 2018.
 ///
 /// From small cli tools and playground experiments to big opensource projects like
-/// [Hitbox](crate::opensource::Hitbox) and
-/// production apllications like [News](crate::work::Rambler::News) and [MediaUp](crate::work::Rambler::MediaUp).
+/// [Hitbox](https://github.com/hit-box/hitbox/) and
+/// production applications like [News](crate::work::Rambler::News) and [MediaUp](crate::work::Rambler::MediaUp).
 impl Rust for Me {}
 /// Started use Linux as main system since 2006.
 ///
@@ -485,20 +487,200 @@ pub enum EducationHistory {
 }
 
 /// Opensource projects
+#[derive(CleanupDocs)]
 pub enum OpenSource {
-    /// Hitbox documentation
-    Hitbox(opensource::Hitbox),
-    /// AioRiak documentation
-    AioRiak,
+    /// [Hitbox](https://github.com/hit-box/hitbox) is a high-performance caching framework suitable for single-machine and for distributed applications in Rust.
+    Hitbox(Author),
+    /// [Hitboxd](https://github.com/hit-box/hitboxd) is a caching reverse proxy for HTTP.
+    Hitboxd(Author),
+    /// [actix-web-validator](https://github.com/rambler-digital-solutions/actix-web-validator) is a Rust library for providing validation mechanism to actix-web with Validator crate.
+    ActixWebValidator(Author),
+    /// [aioriak](https://github.com/rambler-digital-solutions/aioriak) is a Python asyncio client for RiakKV database.
+    AioRiak(Author),
+    /// [aiohttp](https://github.com/aio-libs/aiohttp) - Asynchronous HTTP client/server framework for asyncio and Python.
+    AioHTTP(Contributor),
+    /// [conflow](https://github.com/singulared/conflow) - Python configuration manager.
+    Conflow(Author),
+    /// [bb8](https://github.com/djc/bb8) - Full-featured async (tokio-based) connection pool (like r2d2).
+    BB8(Contributor),
+    /// [flask-restfull](https://github.com/flask-restful/flask-restful) - REST API framework for Flask.
+    FlaskRestful(Contributor),
+    /// [pyjasperclient](https://github.com/agaoglu/pyjasperclient) - SOAP client for JasperReports.
+    PyJasperClient(Contributor),
+    /// [flask-hmacauth](https://github.com/Phillipmartin/flask-hmacauth/) - Flask hmac auth module.
+    FlaskHmacAuth(Contributor),
+}
+
+/// Conferences & meet-up
+#[derive(CleanupDocs)]
+pub enum ConferencesHistory {
+    /// *2021, 2022*: Biggest [Rust conference](https://rustcon.ru/) in Russia.
+    RustCon(RustCon2021, RustCon2022),
+    /// *2021*: Biggest [Python conference](https://pycon.ru/) in Russia.
+    PyCon(PyCon2021),
+    /// *2021*: Local [Moscow Rust community](https://www.meetup.com/Rust-%D0%B2-%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/events/279291922/).
+    MoscowRustMeetup(MoscowRustMeetup2021),
+    /// *2021, 2022*: Rust lecturer in Yandex School of Data Analysis.
+    SHAD,
+    /// *2016*: [Conference](https://devconf.ru) of professional web developers.
+    DevConf(DevConf2016),
+    /// *2016*: Local [Moscow python community](https://moscowpython.ru).
+    MoscowPythonMeetup(MoscowPythonMeetup2016),
+    /// *2015 - 2022*: Rambler company meetups.
+    RamblerMeetup(RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers),
+    MoscowPythonPodcast,
+}
+
+/// Publications and articles
+pub mod publications {
+
+}
+
+/// Conferences and meet-up
+pub mod conferences {
+    use resume_macro::CleanupDocs;
+
+    use crate::opensource::Author;
+
+    use self::roles::{Speaker, ProgramDirector, Moderator};
+
+    pub mod roles {
+        /// Program director of the conference.
+        pub trait ProgramDirector {}
+        /// Speaker on the conference.
+        pub trait Speaker {}
+        /// Moderator or presenter of the event.
+        pub trait Moderator {}
+    }
+    /// Video of the speech at the conference.
+    pub trait Video<Language> {}
+
+    /// RustCon Russia 2021. All videos you can see on [YouTube](https://www.youtube.com/playlist?list=PLRdS-n5seLRroZ480sDtes06hn6_M7N_i)
+    #[derive(CleanupDocs)]
+    pub struct RustCon2021;
+    /// One of the Program directors of RustCon Russia 2021
+    impl ProgramDirector for RustCon2021 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/bEP0YcOyuyE?list=PLRdS-n5seLRroZ480sDtes06hn6_M7N_i" title="Rust и Python - как в небольшой команде переписать узкие места на Rust. Максим Акинин, assi.ai" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for RustCon2021 {}
+
+    #[derive(CleanupDocs)]
+    /// RustCon Russia 2022. TBD.
+    pub struct RustCon2022;
+    /// One of the Program directors of RustCon Russia 2021
+    impl ProgramDirector for RustCon2022 {}
+
+    /// PyCon Russia 2021.
+    ///
+    /// Biggest Python conference in Russia.
+    #[derive(CleanupDocs)]
+    pub struct PyCon2021;
+    /// Many articles have been written on the topic of using optional developed typing in Python.
+    ///
+    /// In this speech, we will not try to repeat common truths but will try to answer the question of why we need to use it.
+    /// Using examples, we will figure out how this can be done, touch on the complexities, and demonstrate how to solve them.
+    impl Speaker for PyCon2021 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/Z6sUShcirsU?list=PLRdS-n5seLRrgvgaGcx6S7e3zsyLpY5iO" title="Андрей Ермилов, Максим Белоусов. Советы по использованию опциональной статической типизации" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for PyCon2021 {}
+
+    /// [Conference](https://devconf.ru) of professional web developers.
+    #[derive(CleanupDocs)]
+    pub struct DevConf2016;
+    /// This speech discusses the problem of the lack of an asynchronous Python driver for Riak and the reasons for writing its own implementation.
+    /// Review of possible solutions and their comparsion.  
+    /// [Presentation](https://s.conf.guru/data/devconf2016/ppt/155.pdf)
+    impl Speaker for DevConf2016 {}
+
+    /// Local [Moscow Rust community](https://www.meetup.com/Rust-%D0%B2-%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/events/279291922/).
+    #[derive(CleanupDocs)]
+    pub struct MoscowRustMeetup2021;
+    /// The experience of switching to Rust or how we got to open source.
+    impl Speaker for MoscowRustMeetup2021 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/mZqFJwrySbI" title="Moscow Rust Meetup в офисе UnitedTraders (16.07.2021)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for MoscowRustMeetup2021 {}
+
+    /// Local [Moscow python community](https://moscowpython.ru).
+    #[derive(CleanupDocs)]
+    pub struct MoscowPythonMeetup2016;
+    /// This speech discusses the problem of the lack of an asynchronous Python driver for Riak and the reasons for writing its own implementation.
+    /// Review of possible solutions and their comparison.  
+    ///
+    /// - Domain theory (riak, asyncio), problem statement.
+    /// - Overview of existing solutions.
+    /// - Implemented solutions comparsion:
+    ///   - blocking calls
+    ///   - executor
+    ///   - aioriak
+    /// - performance comparison.
+    /// - Why was it necessary?
+    ///
+    /// [Presentation](https://speakerdeck.com/moscowdjango/asyncio-kliient-dlia-riak-zachiem)
+    impl Speaker for MoscowPythonMeetup2016 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/q-hPXZZzx9k" title="Asyncio клиент для Riak. Зачем?" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for MoscowPythonMeetup2016 {}
+
+    /// First cooperative DevOps meetup of two companies: Rambler&Co and Okko.
+    #[derive(CleanupDocs)]
+    pub struct RamblerDevOps2021;
+    /// Me as moderator and presenter.
+    impl Moderator for RamblerDevOps2021 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/78vpPXuwxL0" title="Rambler&Okko DevOps Meetup" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for RamblerDevOps2021 {}
+
+    /// Rambler Python meetup.
+    /// - Best practice in user embedding with PyTourch and Docker
+    /// - Rust bindings for Python applications
+    /// - Spark: 20 minutes adventure
+    #[derive(CleanupDocs)]
+    pub struct RamblerPython2021;
+    /// Me as moderator and presenter.
+    impl Moderator for RamblerPython2021 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/gpf_KOAmgzY" title="RamblerMeetup&Python" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for RamblerPython2021 {}
+
+    /// Video version of articles "[Rust for Python developers](https://habr.com/ru/company/rambler_group/blog/533268/)" created with collaboration with Andrey Ermolov.
+    ///
+    /// In this video we will talk about why we move away from the usual technology stack, and show what advantages Rust has compared to Python.
+    /// * First part ([Text version](https://habr.com/ru/company/rambler_group/blog/533268/))
+    ///     * Types
+    ///     * User types and polymorphism
+    ///     * Enums
+    ///     * Option & Result
+    ///     * Pattern matching
+    ///     * Traits and Protocols
+    ///     * Generic programming
+    /// * Second part ([Text version](https://habr.com/ru/company/rambler_group/blog/535234/))
+    ///     * Multithreading
+    ///     * Asynchronous
+    ///     * Functional programming
+    ///     * Conclusion
+    #[derive(CleanupDocs)]
+    pub struct RustForPythonDevelopers;
+    /// Author and speaker with Andrey Ermilov.
+    impl Speaker for RustForPythonDevelopers {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/mXrgzTkDSGs" title="Rust глазами Python-иста" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for RustForPythonDevelopers {}
+
+    #[derive(CleanupDocs)]
+    /// Podcast from founders of the biggest Russian python community [MoscowPython](https://www.facebook.com/groups/MoscowDjango/)
+    pub struct MoscowPythonPodcast2020;
+    /// Guests with Andrey Ermilov.
+    ///
+    /// We talked about the winding path of Python (and not only) developers. 
+    /// Btw we talked about refactoring and rewriting big projects (on Rust).
+    impl Speaker for MoscowPythonPodcast2020 {}
+    /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/d9suAx7A6VM" title="Moscow Python Podcast. Рефакторинг проектов по-взрослому (level: middle)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+    impl<Ru> Video<Ru> for MoscowPythonPodcast2020 {}
 }
 
 /// Opensource projects and contributions
 pub mod opensource {
     use resume_macro::CleanupDocs;
-
+    
+    /// Author of the opensource project
     #[derive(CleanupDocs)]
-    pub struct Hitbox;
+    pub struct Author;
 
+    /// Contributor to the opensource project
     #[derive(CleanupDocs)]
-    pub struct AioRiak;
+    pub struct Contributor;
 }
