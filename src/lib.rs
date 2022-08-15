@@ -443,7 +443,7 @@ impl Rust for Me {}
 impl Linux for Me {}
 /// In 2015 with Riak I opened distributed systems world for myself. I continue opening it up nowadays of course.
 impl DistributedSystems for Me {}
-/// CRDT as i think one of the most interesting technology of the last years.
+/// CRDT as i think is one of the most interesting technology of the last years.
 impl CRDT for Me {}
 /// One of my hobby is microcontrollers and embedded development.
 ///
