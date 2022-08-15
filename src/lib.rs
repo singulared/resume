@@ -8,7 +8,7 @@
 //! # Maxim Belousov
 //! Rustacean, Crypto-anarchist and Techno-punk.
 
-use conferences::{roles::ProgramDirector, PyCon2021, RustCon2021, RustCon2022, DevConf2016, MoscowRustMeetup2021, MoscowPythonMeetup2016, RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers};
+use conferences::{roles::ProgramDirector, PyCon2021, RustCon2021, RustCon2022, DevConf2016, MoscowRustMeetup2021, MoscowPythonMeetup2016, RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers, MoscowPythonPodcast2020};
 use opensource::{Author, Contributor};
 #[doc(hidden)]
 pub use resume_macro::CleanupDocs;
@@ -528,7 +528,7 @@ pub enum ConferencesHistory {
     MoscowPythonMeetup(MoscowPythonMeetup2016),
     /// *2015 - 2022*: Rambler company meetups.
     RamblerMeetup(RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers),
-    MoscowPythonPodcast,
+    MoscowPythonPodcast(MoscowPythonPodcast2020),
 }
 
 /// Publications and articles
