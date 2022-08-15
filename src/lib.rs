@@ -528,6 +528,7 @@ pub enum ConferencesHistory {
     MoscowPythonMeetup(MoscowPythonMeetup2016),
     /// *2015 - 2022*: Rambler company meetups.
     RamblerMeetup(RamblerDevOps2021, RamblerPython2021, RustForPythonDevelopers),
+    /// *2020*: Podcast from founders of the biggest Russian python community [MoscowPython](https://www.facebook.com/groups/MoscowDjango/)
     MoscowPythonPodcast(MoscowPythonPodcast2020),
 }
 
