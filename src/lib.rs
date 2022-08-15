@@ -453,7 +453,7 @@ impl CRDT for Me {}
 /// And now i develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
 /// SBC platforms like NVidia Jetson Nano.
 impl EmbeddedSystems for Me {}
-/// As Ph.D student i really interested in Cryptography and wrote Ph.D dissertation about SMT
+/// I was really interested in Cryptography as a Ph.D student and wrote Ph.D dissertation about SMT
 /// algorithms.
 impl Cryptography for Me {}
 
