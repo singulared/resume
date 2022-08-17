@@ -1,10 +1,19 @@
 [package]
 name = "resume"
-version = "0.2.2"
+version = "0.2.3"
 edition = "2021"
 repository = "https://github.com/hit-box/hitbox/"
-authors = ["Maxim Beslousov"]
-keywords = ["test-keyword"]
+authors = ["Maxim Beslousov <mail@singulared.space>"]
+keywords = ["resume", "cv", "hr"]
+description = "Maxim Belousov's resume"
+documentation = "https://resume.singulared.space/resume/"
+readme = "README.md"
+homepage = "https://resume.singulared.space/"
+repository = "https://github.com/singulared/resume"
+license = "MIT"
+license-file = "LICENSE"
+categories = ["rust-patterns", "visualization"]
+publish = false
 
 # See more keys and their definitions at https://doc.rust-lang.org/cargo/reference/manifest.html
 

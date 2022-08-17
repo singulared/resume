@@ -437,7 +437,7 @@ impl TechnicalInterests for Me {}
 /// [Hitbox](https://github.com/hit-box/hitbox/) and
 /// production applications like [News](crate::work::Rambler::News) and [MediaUp](crate::work::Rambler::MediaUp).
 impl Rust for Me {}
-/// Started use Linux as main system since 2006.
+/// Started to use Linux as main system since 2006.
 ///
 /// Debian one Love (:
 impl Linux for Me {}
@@ -638,7 +638,7 @@ pub mod conferences {
     /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/gpf_KOAmgzY" title="RamblerMeetup&Python" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
     impl<Ru> Video<Ru> for RamblerPython2021 {}
 
-    /// Video version of articles "[Rust for Python developers](https://habr.com/ru/company/rambler_group/blog/533268/)" created with collaboration with Andrey Ermolov.
+    /// Video version of articles "[Rust for Python developers](https://habr.com/ru/company/rambler_group/blog/533268/)" created in collaboration with Andrey Ermolov.
     ///
     /// In this video we will talk about why we move away from the usual technology stack, and show what advantages Rust has compared to Python.
     /// * First part ([Text version](https://habr.com/ru/company/rambler_group/blog/533268/))
