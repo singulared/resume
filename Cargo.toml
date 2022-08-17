@@ -1,8 +1,7 @@
 [package]
 name = "resume"
-version = "0.2.3"
+version = "0.2.4"
 edition = "2021"
-repository = "https://github.com/hit-box/hitbox/"
 authors = ["Maxim Beslousov <mail@singulared.space>"]
 keywords = ["resume", "cv", "hr"]
 description = "Maxim Belousov's resume"
