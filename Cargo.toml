@@ -10,7 +10,6 @@ readme = "README.md"
 homepage = "https://resume.singulared.space/"
 repository = "https://github.com/singulared/resume"
 license = "MIT"
-license-file = "LICENSE"
 categories = ["rust-patterns", "visualization"]
 publish = false
 
