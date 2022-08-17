@@ -35,6 +35,12 @@ pub const PHONE: u64 = 79190007134;
 /// 28.12.1988
 pub const BIRTHDATE: &str = "28-12-1988";
 
+/// [Source code](https://github.com/singulared/resume/) of this resume
+pub const SOURCES: &str = "https://github.com/singulared/resume/";
+
+/// [Boring version](https://docs.google.com/document/d/1O2OFZn_dK-gHszWc85DdHQtlAM3IX7Vf4_72tqOLD6I/edit?usp=sharing) of this resume
+pub const RESUME: &str = "https://docs.google.com/document/d/1O2OFZn_dK-gHszWc85DdHQtlAM3IX7Vf4_72tqOLD6I/edit?usp=sharing";
+
 use hobbies::{Biking, EmbeddedSystems, Music, Piano, Tennis, CTF};
 use technologies::{
     languages::Rust, tools::Linux, Cryptography, DistributedSystems, Hobbies, TechnicalInterests,
