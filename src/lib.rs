@@ -5,8 +5,7 @@
 #![allow(deprecated)]
 #![allow(unused)]
 #![doc(html_logo_url = "https://avatars.githubusercontent.com/u/414425?v=4")]
-//! # Maxim Belousov
-//! Rustacean, Crypto-anarchist and Techno-punk.
+#![doc = include_str!("../README.md")]
 
 use conferences::{
     roles::ProgramDirector, DevConf2016, MoscowPythonMeetup2016, MoscowPythonPodcast2020,

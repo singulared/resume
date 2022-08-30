@@ -20,8 +20,11 @@ Btw I started some open source projects like **[Hitbox]**. It is a high-performa
 
 In addition, I am an information security analyst and cryptographer as part of my university specialization.
 
-As a hobby, I really like **embedded development** and working with some Linux-based devices such as PinePhone, PineTime etc.
+As a hobby, I really like **embedded development** and working with some Linux-based devices such as [PinePhone], [PinePhonePro], [PineTime] etc.
 
 
 [Hitbox]: https://github.com/hit-box/hitbox/
-[Rambler]: https://news.rambler.ru
+[Rambler]: https://news.rambler.ru/
+[PinePhone]: https://www.pine64.org/pinephone/
+[PinePhonePro]: https://www.pine64.org/pinephonepro/
+[PineTime]: https://www.pine64.org/pinetime/
