@@ -3,9 +3,9 @@
 
 Hi! I am an experienced **team lead**, **software engineer** and **open-source enthusiast** with an interest in **Rust**, **Python**, **distributed systems** and cryptography.
 
-I am interested in the next technology stack:
+I am interested in the following technology stack:
 
-- Rust (Tokio, Actix, Tonic, Diesel)
+- Rust (Tokio, Actix, Tonic, Tracing)
 - Python (Asyncio, Aiohttp, FastAPI, Pydantic, MyPy)
 - Databases (PostgreSQL, ClickHouse, Cassandra)
 - Distributed systems (CRDT, Raft)

@@ -2,7 +2,7 @@ name: Rust
 
 on:
   push:
-    branches: [ "main" ]
+    branches: ["main"]
   workflow_dispatch:
 
 env:
@@ -12,35 +12,35 @@ jobs:
   deploy:
     runs-on: ubuntu-latest
     steps:
-    - uses: actions/checkout@v4
-    - name: Install Rust nightly
-      uses: actions-rs/toolchain@v1
-      with:
-        toolchain: nightly
-        profile: minimal
-        override: true
-        components: rustfmt, clippy
-    - name: Annotate commit with clippy warnings
-      uses: actions-rs/clippy-check@v1
-      with:
-        token: ${{ secrets.GITHUB_TOKEN }}
-        args: --all-features
-    - name: Build docs
-      run: cargo doc --no-deps --verbose
-    - name: SSH setup
-      env:
-        DEPLOY_KEY: ${{ secrets.DEPLOYMENT_KEY }}
-        KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
-      run: |
-        mkdir -p ~/.ssh
-        echo "${KNOWN_HOSTS}" >> ~/.ssh/known_hosts
-        echo "${DEPLOY_KEY}" > ~/.ssh/id_ed25519.ci
-        echo "IdentityFile ~/.ssh/id_ed25519.ci" >> ~/.ssh/config
-        chmod -R 700 ~/.ssh
-    - name: Rsync deployment
-      env:
-        DEPLOYMENT_USER: ${{ secrets.DEPLOYMENT_USER }}
-        DEPLOYMENT_HOST: ${{ secrets.DEPLOYMENT_HOST }}
-        DEPLOYMENT_PORT: ${{ secrets.DEPLOYMENT_PORT }}
-      run: |
-        rsync -avz --rsh="ssh -p${DEPLOYMENT_PORT}" --delete target/doc/ ${DEPLOYMENT_USER}@${DEPLOYMENT_HOST}:/var/www/resume/
+      - uses: actions/checkout@v4
+      - name: Install Rust nightly
+        uses: actions-rs/toolchain@v1
+        with:
+          toolchain: nightly
+          profile: minimal
+          override: true
+          components: rustfmt, clippy
+      - name: Annotate commit with clippy warnings
+        uses: actions-rs/clippy-check@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          args: --all-features
+      - name: Build docs
+        run: cargo doc --no-deps --verbose
+      - name: SSH setup
+        env:
+          DEPLOY_KEY: ${{ secrets.DEPLOYMENT_KEY }}
+          KNOWN_HOSTS: ${{ secrets.KNOWN_HOSTS }}
+        run: |
+          mkdir -p ~/.ssh
+          echo "${KNOWN_HOSTS}" >> ~/.ssh/known_hosts
+          echo "${DEPLOY_KEY}" > ~/.ssh/id_ed25519.ci
+          echo "IdentityFile ~/.ssh/id_ed25519.ci" >> ~/.ssh/config
+          chmod -R 700 ~/.ssh
+      - name: Rsync deployment
+        env:
+          DEPLOYMENT_USER: ${{ secrets.DEPLOYMENT_USER }}
+          DEPLOYMENT_HOST: ${{ secrets.DEPLOYMENT_HOST }}
+          DEPLOYMENT_PORT: ${{ secrets.DEPLOYMENT_PORT }}
+        run: |
+          rsync -avz --rsh="ssh -p${DEPLOYMENT_PORT}" --delete target/doc/ ${DEPLOYMENT_USER}@${DEPLOYMENT_HOST}:/var/www/resume/

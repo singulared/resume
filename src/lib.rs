@@ -53,7 +53,7 @@ pub use work::WorkHistory;
 pub struct Me;
 /// My technical interests
 impl TechnicalInterests for Me {}
-/// Started interesting in Rust in 2018.
+/// Started getting interested in Rust in 2018.
 ///
 /// From small cli tools and playground experiments to big opensource projects like
 /// [Hitbox](https://github.com/hit-box/hitbox/) and
@@ -63,16 +63,16 @@ impl Rust for Me {}
 ///
 /// Debian one Love (:
 impl Linux for Me {}
-/// In 2015 with Riak I opened distributed systems world for myself. I continue opening it up nowadays of course.
+/// In 2015 with Riak I opened the distributed systems world for myself. I continue exploring it nowadays, of course.
 impl DistributedSystems for Me {}
-/// CRDT as i think is one of the most interesting technology of the last years.
+/// CRDT, as I think, is one of the most interesting technologies of recent years.
 impl CRDT for Me {}
-/// One of my hobby is microcontrollers and embedded development.
+/// One of my hobbies is microcontrollers and embedded development.
 ///
 /// I started from porting Python3 and building kernel for Motorola a1200.  
 /// Porting linux on Toshiba ac100 arm smartbook.  
 /// Samsung ARM chromeebook hacks and development.  
-/// And now i develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
+/// And now I develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
 /// SBC platforms like NVidia Jetson Nano.
 impl EmbeddedSystems for Me {}
 /// I was really interested in Cryptography as a Ph.D student and wrote Ph.D dissertation about SMT

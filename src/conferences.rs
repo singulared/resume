@@ -47,7 +47,7 @@ impl<Ru> Video<Ru> for PyCon2021 {}
 #[derive(CleanupDocs)]
 pub struct DevConf2016;
 /// This speech discusses the problem of the lack of an asynchronous Python driver for Riak and the reasons for writing its own implementation.
-/// Review of possible solutions and their comparsion.  
+/// Review of possible solutions and their comparison.  
 /// [Presentation](https://s.conf.guru/data/devconf2016/ppt/155.pdf)
 impl Speaker for DevConf2016 {}
 
@@ -67,7 +67,7 @@ pub struct MoscowPythonMeetup2016;
 ///
 /// - Domain theory (riak, asyncio), problem statement.
 /// - Overview of existing solutions.
-/// - Implemented solutions comparsion:
+/// - Implemented solutions comparison:
 ///   - blocking calls
 ///   - executor
 ///   - aioriak

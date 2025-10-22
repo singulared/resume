@@ -1,6 +1,6 @@
-//! 2015-2022 [Rambler&Co](https://rambler.ru) is one of the biggiest media holding in Russia.
+//! 2015-2022 [Rambler&Co](https://rambler.ru) is one of the biggest media holdings in Russia.
 //!
-//! I start work in Rambler as Middle Python developer in 2015 and end as Head of Media
+//! I started work at Rambler as a Middle Python developer in 2015 and ended as Head of Media
 //! Development team in 2022.
 use crate::roles::{Developer, TeamLead};
 use crate::technologies::databases::{Cassandra, ClickHouse, Postgresql, Riak};
@@ -89,7 +89,7 @@ where
 }
 /// Head of Media development team.
 ///
-/// Since 2018, I have become the head of the development team. With a team we were able to mostly solve all the problems described:
+/// Since 2018, I have become the head of the development team. With the team, we were able to mostly solve all the problems described:
 /// * We are rewriting all Aggregator parts with actual ML algorithms and technical stack
 /// * Rewrite core API with Rust.
 /// * Rewrite parsing component with Rust
@@ -98,7 +98,7 @@ where
 /// * Incidents count has decreased by about 10 times
 /// * Resource costs have decreased by about 20 times
 /// * Re-select and rewrite all DS workers  
-/// Btw in the development team’s area of responsibility includes such projects as [MediaUp], [Horoscopes], [Weather], and some others.
+/// By the way, the development team's area of responsibility includes such projects as [MediaUp], [Horoscopes], [Weather], and some others.
 impl<'period, 'f2018, 't2022, Team> TeamLead<Team> for &'period News
 where
     Team: Rust + Python,

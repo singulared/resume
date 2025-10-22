@@ -2,7 +2,7 @@
 name = "resume"
 version = "0.2.8"
 edition = "2021"
-authors = ["Maxim Beslousov <mail@singulared.space>"]
+authors = ["Maxim Belousov <mail@singulared.space>"]
 keywords = ["resume", "cv", "hr"]
 description = "Maxim Belousov's resume"
 documentation = "https://resume.singulared.space/resume/"
