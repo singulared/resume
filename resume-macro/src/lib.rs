@@ -1,6 +1,5 @@
 use proc_macro::TokenStream;
 use quote::quote;
-use syn;
 
 #[proc_macro_derive(CleanupDocs)]
 pub fn hello_macro_derive(input: TokenStream) -> TokenStream {
@@ -26,6 +25,8 @@ fn impl_cleanup_docs_macro(ast: &syn::DeriveInput) -> TokenStream {
         impl #impl_generics !core::panic::RefUnwindSafe for #name #ty_generics #where_clause {}
         #[doc(hidden)]
         impl #impl_generics !core::panic::UnwindSafe for #name #ty_generics #where_clause {}
+        #[doc(hidden)]
+        impl #impl_generics !std::marker::Freeze for #name #ty_generics #where_clause {}
     };
     gen.into()
 }

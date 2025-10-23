@@ -1,5 +1,8 @@
 // #![no_std]
+#![feature(freeze)]
+#![allow(internal_features)]
 #![feature(doc_cfg)]
+#![feature(freeze_impls)]
 #![feature(negative_impls)]
 #![feature(associated_const_equality)]
 #![allow(deprecated)]
@@ -12,7 +15,11 @@ use conferences::{
     MoscowRustMeetup2021, PyCon2021, RamblerDevOps2021, RamblerPython2021, RustCon2021,
     RustCon2022, RustForPythonDevelopers,
 };
-use opensource::{Author, Contributor};
+use opensource::{
+    ActixWebValidator, AioHTTP, AioRiak, Author, BashoDocs, ChromebookKernel, Conflow, Contributor,
+    DataFusionPostgres, FlaskHmacAuth, FlaskRestful, Hitbox, Hitboxd, Poetry, PyJasperClient,
+    Shortland, SlogStdlog, Swayboard, SwayipcRs, BB8,
+};
 #[doc(hidden)]
 pub use resume_macro::CleanupDocs;
 
@@ -94,7 +101,8 @@ impl Tennis for Me {}
 /// * RuCTF/RuCTFe
 /// * iCTF
 /// * Defcon
-/// and other information security competitions.
+///
+/// And other information security competitions.
 impl CTF for Me {}
 
 /// Education history
@@ -111,26 +119,42 @@ pub enum EducationHistory {
 /// Opensource projects
 #[derive(CleanupDocs)]
 pub enum OpenSource {
-    /// [Hitbox](https://github.com/hit-box/hitbox) is a high-performance caching framework suitable for single-machine and for distributed applications in Rust.
-    Hitbox(Author),
-    /// [Hitboxd](https://github.com/hit-box/hitboxd) is a caching reverse proxy for HTTP.
-    Hitboxd(Author),
-    /// [actix-web-validator](https://github.com/rambler-digital-solutions/actix-web-validator) is a Rust library for providing validation mechanism to actix-web with Validator crate.
-    ActixWebValidator(Author),
-    /// [aioriak](https://github.com/rambler-digital-solutions/aioriak) is a Python asyncio client for RiakKV database.
-    AioRiak(Author),
-    /// [aiohttp](https://github.com/aio-libs/aiohttp) - Asynchronous HTTP client/server framework for asyncio and Python.
-    AioHTTP(Contributor),
-    /// [conflow](https://github.com/singulared/conflow) - Python configuration manager.
-    Conflow(Author),
-    /// [bb8](https://github.com/djc/bb8) - Full-featured async (tokio-based) connection pool (like r2d2).
-    BB8(Contributor),
-    /// [flask-restfull](https://github.com/flask-restful/flask-restful) - REST API framework for Flask.
-    FlaskRestful(Contributor),
-    /// [pyjasperclient](https://github.com/agaoglu/pyjasperclient) - SOAP client for JasperReports.
-    PyJasperClient(Contributor),
-    /// [flask-hmacauth](https://github.com/Phillipmartin/flask-hmacauth/) - Flask hmac auth module.
-    FlaskHmacAuth(Contributor),
+    /// Hitbox caching framework
+    Hitbox(Hitbox<Author>),
+    /// Hitboxd caching reverse proxy
+    Hitboxd(Hitboxd<Author>),
+    /// Actix-web validator library
+    ActixWebValidator(ActixWebValidator<Author>),
+    /// AioRiak async client
+    AioRiak(AioRiak<Author>),
+    /// AioHTTP framework contribution
+    AioHTTP(AioHTTP<Contributor>),
+    /// Conflow configuration manager
+    Conflow(Conflow<Author>),
+    /// Shortland URL shortener
+    Shortland(Shortland<Author>),
+    /// Swayboard layout manager
+    Swayboard(Swayboard<Author>),
+    /// Chromebook kernel fork
+    ChromebookKernel(ChromebookKernel<Author>),
+    /// DataFusion-Postgres contribution
+    DataFusionPostgres(DataFusionPostgres<Contributor>),
+    /// Swayipc-rs contribution
+    SwayipcRs(SwayipcRs<Contributor>),
+    /// Poetry contribution
+    Poetry(Poetry<Contributor>),
+    /// Slog-stdlog contribution
+    SlogStdlog(SlogStdlog<Contributor>),
+    /// Basho docs contribution
+    BashoDocs(BashoDocs<Contributor>),
+    /// BB8 connection pool contribution
+    BB8(BB8<Contributor>),
+    /// Flask-RESTful contribution
+    FlaskRestful(FlaskRestful<Contributor>),
+    /// PyJasperClient contribution
+    PyJasperClient(PyJasperClient<Contributor>),
+    /// Flask-HMACAuth contribution
+    FlaskHmacAuth(FlaskHmacAuth<Contributor>),
 }
 
 /// Conferences & meet-up
@@ -142,7 +166,7 @@ pub enum ConferencesHistory {
     PyCon(PyCon2021),
     /// *2021*: Local [Moscow Rust community](https://www.meetup.com/Rust-%D0%B2-%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/events/279291922/).
     MoscowRustMeetup(MoscowRustMeetup2021),
-    /// *2021, 2022*: Rust lecturer in Yandex School of Data Analysis.
+    /// *2021, 2022, 2023*: Rust lecturer in Yandex School of Data Analysis.
     SHAD,
     /// *2016*: [Conference](https://devconf.ru) of professional web developers.
     DevConf(DevConf2016),

@@ -39,25 +39,40 @@ pub mod databases {
     pub trait Cassandra {}
     pub trait MySQL {}
     pub trait ClickHouse {}
+    pub trait Redis {}
+    pub trait DynamoDB {}
+    pub trait MongoDB {}
+    pub trait Neo4j {}
 }
 
 /// Frameworks
 pub mod frameworks {
     pub trait Actix {}
+    pub trait Axum {}
     pub trait Tokio {}
     pub trait AsyncIO {}
     pub trait AioHTTP {}
+    pub trait FastAPI {}
     pub trait Flask {}
     pub trait Celery {}
     pub trait Django {}
     pub trait OpenGL {}
     pub trait Qt {}
+    pub trait Poem {}
+    pub trait Kafka {}
+    pub trait Criterion {}
+    pub trait Cucumber {}
+    pub trait Tracing {}
+    pub trait Juniper {}
+    pub trait AsyncGraphQL {}
+    pub trait DataFusion {}
 }
 
 /// Message brokers, event handling systems and RPCs.
 pub mod messages {
     pub trait RabbitMQ {}
     pub trait GRPC {}
+    pub trait SQS {}
 }
 
 /// Working tools
