@@ -1,4 +1,8 @@
 //! Information about previous works
+//!
+//! ## Career Timeline
+//!
+#![doc = simple_mermaid::mermaid!("timeline.mmd")]
 use resume_macro::CleanupDocs;
 use AnjLab::{CloudCube, FlightMap, FlightMonitor, Satago};
 use DigitalWave::{DomainEngine, OLAP};

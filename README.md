@@ -1,6 +1,11 @@
 # Maxim Belousov
 > Rustacean, Crypto-anarchist and Techno-punk.
 
+![Rust](https://img.shields.io/badge/Rust-Expert-orange?style=for-the-badge&logo=rust)
+![Python](https://img.shields.io/badge/Python-Expert-3776AB?style=for-the-badge&logo=python&logoColor=white)
+![Distributed Systems](https://img.shields.io/badge/Distributed_Systems-Expert-blue?style=for-the-badge)
+![Linux](https://img.shields.io/badge/Linux-Expert-FCC624?style=for-the-badge&logo=linux&logoColor=black)
+
 Hi! I am an experienced **team lead**, **software engineer** and **open-source enthusiast** with an interest in **Rust**, **Python**, **distributed systems** and cryptography.
 
 I am interested in the following technology stack:

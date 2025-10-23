@@ -1,6 +1,6 @@
 [package]
 name = "resume"
-version = "0.3.2"
+version = "0.3.3"
 edition = "2024"
 authors = ["Maxim Belousov <mail@singulared.space>"]
 keywords = ["resume", "cv", "hr"]
@@ -15,6 +15,7 @@ publish = false
 
 [dependencies]
 resume-macro = { path = "./resume-macro" }
+simple-mermaid = "0.2"
 
 [features]
 team-lead = []

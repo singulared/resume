@@ -76,9 +76,9 @@ impl DistributedSystems for Me {}
 impl CRDT for Me {}
 /// One of my hobbies is microcontrollers and embedded development.
 ///
-/// I started from porting Python3 and building kernel for Motorola a1200.  
-/// Porting linux on Toshiba ac100 arm smartbook.  
-/// Samsung ARM chromeebook hacks and development.  
+/// I started from porting Python3 and building kernel for Motorola a1200.
+/// Porting linux on Toshiba ac100 arm smartbook.
+/// Samsung ARM chromeebook hacks and development.
 /// And now I develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
 /// SBC platforms like NVidia Jetson Nano.
 impl EmbeddedSystems for Me {}

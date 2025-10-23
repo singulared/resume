@@ -6,6 +6,12 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.3] - 2025-10-23
+### Added
+- Interactive Mermaid timeline diagram in work module documentation
+- Skill badges on main page (Rust, Python, Distributed Systems, Linux)
+- simple-mermaid crate for Mermaid diagram support
+
 ## [0.3.2] - 2025-10-23
 ### Changed
 - Set default documentation theme to Ayu
