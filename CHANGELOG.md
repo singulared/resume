@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.2] - 2025-10-23
+### Changed
+- Set default documentation theme to Ayu
+
 ## [0.3.1] - 2025-10-23
 ### Fixed
 - All clippy warnings (unused lifetime parameters and documentation formatting)
