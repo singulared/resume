@@ -6,6 +6,10 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.1] - 2025-10-23
+### Fixed
+- All clippy warnings (unused lifetime parameters and documentation formatting)
+
 ## [0.3.0] - 2025-10-23
 ### Added
 - Work experience at Digital Wave Technology (2024-present) as Core Software Engineer

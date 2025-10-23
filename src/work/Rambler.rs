@@ -20,6 +20,7 @@ pub struct Paywall;
 ///
 /// The project uses Riak as the main storage and is based on event architecture built on top of RabbitMQ.
 /// Btw this project uses Cassandra and python 3.5 with asyncio as backend.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2015, 't2017, Languages> Developer<Languages> for &'period Paywall
 where
     Languages: Python + Erlang,
@@ -42,6 +43,7 @@ impl AioHTTP for Paywall {}
 #[deprecated(since = "2017.1.1", note = "Closed")]
 pub struct AdBlock;
 /// This project uses [Paywall] architecture and shares some codebases.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2016, 't2017, Language> Developer<Language> for &'period AdBlock
 where
     Language: Python,
@@ -60,6 +62,7 @@ impl ClickHouse for AdBlock {}
 #[deprecated(since = "2018.1.1", note = "Closed")]
 pub struct Video;
 /// Migration to Python 3.6 bugfix and codebase support.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'in2017, Language> Developer<Language> for &'period Video
 where
     Language: Python,
@@ -81,6 +84,7 @@ pub struct News;
 ///
 /// Infrastructure migration to k8s and refactoring deployment process.
 /// Migration legacy codebase to python 3.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2017, 't2018, Language> Developer<Language> for &'period News
 where
     Language: Python,
@@ -97,8 +101,10 @@ where
 /// * Latency has decreased by about 10 times
 /// * Incidents count has decreased by about 10 times
 /// * Resource costs have decreased by about 20 times
-/// * Re-select and rewrite all DS workers  
-/// By the way, the development team's area of responsibility includes such projects as [MediaUp], [Horoscopes], [Weather], and some others.
+/// * Re-select and rewrite all DS workers
+///
+///   By the way, the development team's area of responsibility includes such projects as [MediaUp], [Horoscopes], [Weather], and some others.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2018, 't2022, Team> TeamLead<Team> for &'period News
 where
     Team: Rust + Python,
@@ -131,6 +137,7 @@ pub struct MediaUp;
 /// As a Head of the development team, I chose all technical decisions about application architecture and infrastructure.
 ///
 /// Backend architecture closest to News rust core API and had the same technology stack.
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2020, 't2021, Team> TeamLead<Team> for &'period MediaUp
 where
     Team: Rust,
@@ -149,6 +156,7 @@ impl GRPC for MediaUp {}
 /// Rambler&Co service with [esoteric content](http://horoscopes.rambler.ru). (:
 #[derive(CleanupDocs)]
 pub struct Horoscopes;
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2018, 't2022, Team> TeamLead<Team> for &'period Horoscopes
 where
     Team: Python,
@@ -163,6 +171,7 @@ impl Django for Horoscopes {}
 /// Rambler&Co weather [forecast service](https://weather.rambler.ru).
 #[derive(CleanupDocs)]
 pub struct Weather;
+#[allow(clippy::extra_unused_lifetimes)]
 impl<'period, 'f2018, 't2022, Team> TeamLead<Team> for &'period Weather
 where
     Team: Python,
