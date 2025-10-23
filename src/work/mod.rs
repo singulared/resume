@@ -3,6 +3,14 @@
 //! ## Career Timeline
 //!
 #![doc = simple_mermaid::mermaid!("timeline.mmd")]
+//!
+//! <script type="module">
+//!   import mermaid from "https://cdn.jsdelivr.net/npm/mermaid@11/dist/mermaid.esm.min.mjs";
+//!   const doc_theme = localStorage.getItem("rustdoc-theme");
+//!   const theme = (doc_theme === "dark" || doc_theme === "ayu") ? "dark" : "default";
+//!   mermaid.initialize({ startOnLoad: true, theme: theme });
+//!   window.addEventListener('DOMContentLoaded', (event) => { mermaid.run(); });
+//! </script>
 use resume_macro::CleanupDocs;
 use AnjLab::{CloudCube, FlightMap, FlightMonitor, Satago};
 use DigitalWave::{DomainEngine, OLAP};

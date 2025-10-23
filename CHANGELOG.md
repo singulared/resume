@@ -6,6 +6,11 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 
 ## [Unreleased]
 
+## [0.3.4] - 2025-10-23
+### Fixed
+- Mermaid timeline rendering in Chromium by adding proper initialization script
+- Mermaid script now loads only on work module page instead of globally
+
 ## [0.3.3] - 2025-10-23
 ### Added
 - Interactive Mermaid timeline diagram in work module documentation
