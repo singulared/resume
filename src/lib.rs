@@ -16,7 +16,7 @@ use conferences::{
 };
 use opensource::{
     ActixWebValidator, AioHTTP, AioRiak, Author, BB8, BashoDocs, ChromebookKernel, Conflow,
-    Contributor, DataFusionPostgres, FlaskHmacAuth, FlaskRestful, Hitbox, Hitboxd, Poetry,
+    Contributor, DataFusionPostgres, FlaskHmacAuth, FlaskRestful, Hitbox, Hitboxd, Moka, Poetry,
     PyJasperClient, Shortland, SlogStdlog, Swayboard, SwayipcRs,
 };
 #[doc(hidden)]
@@ -268,6 +268,8 @@ pub enum OpenSource {
     BashoDocs(BashoDocs<Contributor>),
     /// BB8 connection pool contribution
     BB8(BB8<Contributor>),
+    /// Moka concurrent cache contribution
+    Moka(Moka<Contributor>),
     /// Flask-RESTful contribution
     FlaskRestful(FlaskRestful<Contributor>),
     /// PyJasperClient contribution

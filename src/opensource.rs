@@ -101,6 +101,11 @@ pub struct BashoDocs<R: Role = Contributor>(pub R);
 #[oss(url = "https://github.com/djc/bb8", role = "Contributor", language = "Rust", rank = 2)]
 pub struct BB8<R: Role = Contributor>(pub R);
 
+/// [moka](https://github.com/moka-rs/moka) - High-performance concurrent caching library for Rust, inspired by Java's Caffeine.
+#[derive(CleanupDocs, Oss)]
+#[oss(url = "https://github.com/moka-rs/moka", role = "Contributor", language = "Rust", rank = 0)]
+pub struct Moka<R: Role = Contributor>(pub R);
+
 /// [flask-restful](https://github.com/flask-restful/flask-restful) - REST API framework for Flask.
 #[derive(CleanupDocs, Oss)]
 #[oss(url = "https://github.com/flask-restful/flask-restful", role = "Contributor", language = "Python", rank = 7)]
