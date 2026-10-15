@@ -4,7 +4,6 @@
 #![feature(doc_cfg)]
 #![feature(freeze_impls)]
 #![feature(negative_impls)]
-#![feature(associated_const_equality)]
 #![allow(deprecated)]
 #![allow(unused)]
 #![doc(html_logo_url = "https://avatars.githubusercontent.com/u/414425?v=4")]
