@@ -310,4 +310,3 @@ pub mod publications;
 pub mod roles;
 pub mod technologies;
 pub mod work;
-pub mod work_experimental;
