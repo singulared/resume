@@ -1,3 +1,6 @@
 [toolchain]
-channel = "nightly"
+# Pinned: the crate relies on nightly-only features, which nightly can remove
+# without notice. Bump deliberately and re-check `cargo doc` output.
+channel = "nightly-2026-10-07" # rustc 1.101.0-nightly
 profile = "minimal"
+components = ["clippy", "rustfmt"]
