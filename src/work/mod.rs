@@ -111,7 +111,8 @@ mod companies {
         period = "2015-2022"
     )]
     /// One of the biggest media holdings in Russia. Started as a Middle Python
-    /// developer in 2015 and finished as Head of the Media Development team in 2022.
+    /// developer in 2015 and finished in 2022 as Head of the Media Development team:
+    /// about 10 engineers, most of whom I hired, responsible for tens of services.
     struct Rambler;
 
     #[derive(Company)]

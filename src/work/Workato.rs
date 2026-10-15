@@ -19,7 +19,6 @@ use resume_macro::Project;
 Main responsibilities and achievements:
 * Performance benchmarking and optimization using Criterion framework
 * Identified and resolved performance bottlenecks through systematic profiling
-* Code refactoring for improved maintainability and architecture improvements
 * Integrated comprehensive observability stack (metrics, tracing, monitoring)
 * Implemented predictable query planning for consistent performance characteristics
 * Contributed to design decisions for custom API layer over PostgreSQL/MySQL"#

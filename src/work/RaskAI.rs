@@ -21,8 +21,7 @@ Main responsibilities and achievements:
 * Optimized distributed task processing with SQS, improving throughput and reliability
 * Integrated AI services for translation and dubbing into the main processing pipeline
 * Refactored core backend components for better maintainability and performance
-* Implemented monitoring and observability for critical processing workflows
-* Contributed to architectural decisions for scalability improvements"#
+* Implemented monitoring and observability for critical processing workflows"#
 )]
 #[tech(languages::Python, "Python is the main programming language for this project.")]
 #[tech(frameworks::FastAPI, "Web framework used for HTTP services.")]
@@ -50,8 +49,7 @@ Key achievements:
 * Implemented async task processing with RabbitMQ for background jobs
 * Built comprehensive API documentation and client integration guides
 * Integrated with the main backend via DynamoDB to synchronize billing and usage limit statistics
-* Established API versioning and backward compatibility strategy
-* Delivered production-ready API serving enterprise clients at scale"#
+* Established API versioning and backward compatibility strategy"#
 )]
 #[tech(languages::Python, "Python is the main programming language for this project.")]
 #[tech(frameworks::FastAPI, "Web framework used for HTTP services.")]

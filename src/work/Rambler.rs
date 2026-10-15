@@ -1,7 +1,7 @@
 //! 2015-2022 [Rambler&Co](https://rambler.ru) is one of the biggest media holdings in Russia.
 //!
 //! I joined Rambler as a Middle Python developer in 2015 and left in 2022 as Head of the Media
-//! Development team.
+//! Development team: about 10 engineers, most of whom I hired, responsible for tens of services.
 use resume_macro::Project;
 
 /// System for collecting and processing data about the media portal's users, such as visits and the unique articles each user read.
@@ -76,7 +76,7 @@ pub struct Video;
     langs(Rust, Python),
     doc = r#"Head of the Media Development team.
 
-In 2018, I became the head of the development team. Together with the team, we largely solved the problems described above:
+In 2018, I became the head of the development team: about 10 engineers, most of whom I hired (at one point, the entire team), responsible for tens of services. Together with the team, we largely solved the problems described above:
 * Rewrote all Aggregator parts with up-to-date ML algorithms and tech stack
 * Rewrote the core API in Rust
 * Rewrote the parsing component in Rust
