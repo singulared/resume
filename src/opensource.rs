@@ -22,7 +22,7 @@ impl Role for Contributor {}
 /// cache keys from request data - both working independently of the underlying protocol. Features include multiple backend
 /// implementations (Redis, Moka in-memory), Tower middleware integration, YAML/JSON configuration, three-tier cache
 /// freshness model (actual/stale/expired), and comprehensive BDD test suite. The project consists of 11 modular crates
-/// with ~700+ commits and focuses on sophisticated FSM-based design enabling complete separation between core caching
+/// with 700+ commits and focuses on sophisticated FSM-based design enabling complete separation between core caching
 /// logic and protocol implementations.
 #[derive(CleanupDocs, Oss)]
 #[oss(url = "https://github.com/hit-box/hitbox", role = "Author", language = "Rust", rank = 1)]

@@ -1,67 +1,67 @@
-//! 2010-2015 [Anjlab](https://anjlab.com) is outsource development company in Vladimir city.
+//! 2010-2015 [AnjLab](https://anjlab.com) is an outsourcing development company in Vladimir.
 //!
 //! AnjLab is a team of skilled software development professionals.
 //! We are experienced in the development of performant, scalable and reliable solutions for companies around the world.
 //! We also maintain and contribute to many open source projects.
 use resume_macro::Project;
 
-/// Is a [service](http://anjlab.com/en/portfolio-item/satago/) that allows companies to submit data about how quickly their business customers pay them.
+/// A [service](http://anjlab.com/en/portfolio-item/satago/) that lets companies submit data about how quickly their business customers pay them.
 ///
-/// Other companies can pay for access to aggregated data about companies, payment behavior before doing business with them, as an alternative to a traditional business credit report.
-#[deprecated(note = "Rewritten on Java")]
+/// Other companies can pay for access to aggregated data on a company's payment behavior before doing business with it, as an alternative to a traditional business credit report.
+#[deprecated(note = "Rewritten in Java")]
 #[derive(Project)]
 #[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(Python),
-    doc = "As a python developer, I was the conduct of Sage integration process (like a service and standalone desktop windows application)."
+    doc = "As a Python developer, I was responsible for the Sage integration (both as a service and as a standalone Windows desktop application)."
 )]
 #[tech(languages::Python)]
 #[tech(frameworks::Qt)]
 pub struct Satago;
 
-/// Tools for analysis of meteorological data taken from different sources (satellite, radar).
+/// Tools for analyzing meteorological data from different sources (satellite, radar).
 ///
-/// The tool allows capturing data from text, binary files, and images.
-/// Different data present in the program as layers, which can be put into each other, showed as flat figures or isolines.
+/// The tool captures data from text files, binary files, and images.
+/// The data is presented as layers that can be stacked on top of each other and shown as flat figures or isolines.
 #[deprecated]
 #[derive(Project)]
 #[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CPP),
-    doc = "Whole development process and stack choosing."
+    doc = "The whole development process, including choosing the technology stack."
 )]
 #[tech(languages::CPP)]
 #[tech(frameworks::Qt)]
 pub struct FlightMap;
 
-/// CloudCube is 3D OpenGL cloud data modeling and representation system.
+/// CloudCube is a 3D OpenGL system for modeling and visualizing cloud data.
 ///
-/// The tool can represent cloud models in different visual types, predict reagent transmission and save data for the next analysis steps.
+/// The tool can render cloud models in different visual styles, predict reagent dispersion, and save data for further analysis.
 #[deprecated]
 #[derive(Project)]
 #[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CPP),
-    doc = "Whole development process and stack choosing."
+    doc = "The whole development process, including choosing the technology stack."
 )]
 #[tech(languages::CPP)]
 #[tech(frameworks::OpenGL)]
 pub struct CloudCube;
 
-/// [Hardware-software complex](http://anjlab.com/en/portfolio-item/anjlab-flightmonitor/) for dispatching aircrafts.
+/// [Hardware and software system](http://anjlab.com/en/portfolio-item/anjlab-flightmonitor/) for aircraft dispatching.
 ///
-/// Transferring data about weather state such as while fog, hail, frost suppression, protection against snow avalanches,
-/// and for data communication between boards and the base.
-/// The complex supports the exchange of special data such as digital maps, statistical information, and meteorological reports.
+/// It transfers weather data for fog, hail and frost suppression and snow avalanche protection,
+/// and handles data communication between aircraft and the base.
+/// The system supports the exchange of special data such as digital maps, statistics, and meteorological reports.
 #[derive(Project)]
 #[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CS),
-    doc = r#"* Integration of error correction algorithm
+    doc = r#"* Integrated an error correction algorithm
 * Infrastructure and installation support"#
 )]
 #[tech(languages::CS)]

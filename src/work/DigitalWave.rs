@@ -1,6 +1,6 @@
 //! 2024-present [Digital Wave Technology](https://www.digitalwavetechnology.com/) is an AI-native platform for consumer brands.
 //!
-//! I work as a Core Software Engineer on OLAP database and Domain Engine solutions in a team of 4-5 developers.
+//! I work as a Core Software Engineer on the OLAP database and Domain Engine solutions in a team of 4-5 developers.
 //! The company provides the ONE Platform - an enterprise AI-native platform with master data management at its core,
 //! serving retail, consumer brands, healthcare, and distribution industries.
 use resume_macro::Project;
@@ -21,7 +21,7 @@ use resume_macro::Project;
 Main responsibilities and achievements:
 * Development of columnar storage engine with block-based data structures
 * GraphQL API implementation and query optimization, including schema generation fixes and async resolver improvements
-* Caching strategies and performance improvements, implemented multi-level caching with configurable TTL policies
+* Caching and performance improvements: multi-level caching with configurable TTL policies
 * Multi-user access control and row-level security enhancements
 * External data connector framework (spouts) for data loading with comprehensive error handling
 * Optimized query processing with parallel execution capabilities
@@ -37,7 +37,7 @@ pub struct OLAP;
 
 /// Metadata-driven domain engine for complex data management.
 ///
-/// Enterprise-grade domain engine providing GraphQL API for managing domains, entities, and attributes with dynamic
+/// Enterprise-grade domain engine providing a GraphQL API for managing domains, entities, and attributes with dynamic
 /// expression evaluation and multi-source data aggregation. Features fine-grained permissions, multi-dimensional attributes,
 /// and connectivity to data sources (OLAP, PostgreSQL, ClickHouse). Built with Rust, Tokio, async-graphql, Axum,
 /// DataFusion (SQL frontend), and OpenTelemetry.
@@ -54,7 +54,7 @@ Main responsibilities and achievements:
 * Implemented schema versioning and diff system for tracking schema evolution over time
 * Expression language implementation for dynamic calculations
 * GraphQL API design with federation support
-* Multi-source persistent layer integration (OLAP, PostgreSQL, ClickHouse) with unified query interface
+* Multi-source persistence layer integration (OLAP, PostgreSQL, ClickHouse) with a unified query interface
 * Permissions system and access control implementation
 * SQL frontend integration using DataFusion
 * Fixed critical issues in API layer

@@ -81,29 +81,28 @@ pub use work::WorkHistory;
 pub struct Me;
 /// My technical interests
 impl TechnicalInterests for Me {}
-/// Started getting interested in Rust in 2018.
+/// I got interested in Rust in 2018.
 ///
-/// From small cli tools and playground experiments to big opensource projects like
+/// From small CLI tools and playground experiments to big open-source projects like
 /// [Hitbox](https://github.com/hit-box/hitbox/) and
 /// production applications like [News](crate::work::Rambler::News) and [MediaUp](crate::work::Rambler::MediaUp).
 impl Rust for Me {}
-/// Started to use Linux as main system since 2006.
+/// I have been using Linux as my main system since 2006.
 ///
-/// Debian one Love (:
+/// Debian, one love (:
 impl Linux for Me {}
-/// In 2015 with Riak I opened the distributed systems world for myself. I continue exploring it nowadays, of course.
+/// In 2015, Riak opened up the world of distributed systems for me, and I keep exploring it to this day.
 impl DistributedSystems for Me {}
-/// CRDT, as I think, is one of the most interesting technologies of recent years.
+/// I think CRDTs are one of the most interesting technologies of recent years.
 impl CRDT for Me {}
 /// One of my hobbies is microcontrollers and embedded development.
 ///
-/// I started from porting Python3 and building kernel for Motorola a1200.
-/// Porting linux on Toshiba ac100 arm smartbook.
-/// Samsung ARM chromeebook hacks and development.
-/// And now I develop for some PINE64 devices such as PinePhone, PinePhone PRO, PineTime and other
-/// SBC platforms like NVidia Jetson Nano.
+/// I started by porting Python 3 and building a kernel for the Motorola A1200,
+/// then ported Linux to the Toshiba AC100 ARM smartbook and hacked on the Samsung ARM Chromebook.
+/// Now I develop for PINE64 devices such as the PinePhone, PinePhone Pro and PineTime, and for
+/// SBC platforms like the NVIDIA Jetson Nano.
 impl EmbeddedSystems for Me {}
-/// I was really interested in Cryptography as a Ph.D student and wrote Ph.D dissertation about SMT
+/// I was really interested in cryptography as a Ph.D. student and wrote my Ph.D. dissertation on SMT
 /// algorithms.
 impl Cryptography for Me {}
 
@@ -116,9 +115,9 @@ impl Biking for Me {}
 impl Music for Me {}
 /// I am a piano player.
 impl Piano for Me {}
-/// I am a tennis player since 2004.
+/// I have been playing tennis since 2004.
 impl Tennis for Me {}
-/// Participant of Honeypot team in:
+/// Member of the Honeypot team at:
 /// * RuCTF/RuCTFe
 /// * iCTF
 /// * Defcon
@@ -226,17 +225,17 @@ pub enum OpenSource {
 /// Conferences & meet-up
 #[derive(CleanupDocs)]
 pub enum ConferencesHistory {
-    /// *2021, 2022*: Biggest [Rust conference](https://rustcon.ru/) in Russia.
+    /// *2021, 2022*: The biggest [Rust conference](https://rustcon.ru/) in Russia.
     RustCon(RustCon2021, RustCon2022),
-    /// *2021*: Biggest [Python conference](https://pycon.ru/) in Russia.
+    /// *2021*: The biggest [Python conference](https://pycon.ru/) in Russia.
     PyCon(PyCon2021),
     /// *2021*: Local [Moscow Rust community](https://www.meetup.com/Rust-%D0%B2-%D0%9C%D0%BE%D1%81%D0%BA%D0%B2%D0%B5/events/279291922/).
     MoscowRustMeetup(MoscowRustMeetup2021),
-    /// *2021, 2022, 2023*: Rust lecturer in Yandex School of Data Analysis.
+    /// *2021, 2022, 2023*: Rust lecturer at the Yandex School of Data Analysis.
     SHAD,
     /// *2016*: [Conference](https://devconf.ru) of professional web developers.
     DevConf(DevConf2016),
-    /// *2016*: Local [Moscow python community](https://moscowpython.ru).
+    /// *2016*: Local [Moscow Python community](https://moscowpython.ru).
     MoscowPythonMeetup(MoscowPythonMeetup2016),
     /// *2015 - 2022*: Rambler company meetups.
     RamblerMeetup(
@@ -244,7 +243,7 @@ pub enum ConferencesHistory {
         RamblerPython2021,
         RustForPythonDevelopers,
     ),
-    /// *2020*: Podcast from founders of the biggest Russian python community [MoscowPython](https://www.facebook.com/groups/MoscowDjango/)
+    /// *2020*: A podcast by the founders of the biggest Russian Python community, [MoscowPython](https://www.facebook.com/groups/MoscowDjango/).
     MoscowPythonPodcast(MoscowPythonPodcast2020),
 }
 

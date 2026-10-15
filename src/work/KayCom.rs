@@ -1,6 +1,6 @@
-//! 2008-2010 [KayCom](https://kaycom.ru) is a web-studio in Vladimir city.
+//! 2008-2010 [KayCom](https://kaycom.ru) is a web studio in Vladimir.
 //!
-//! KayCom is a web-studio with mobile development team and many projects in Russia and around
+//! KayCom is a web studio with a mobile development team and many projects in Russia and around
 //! the world.
 use resume_macro::Project;
 

@@ -1,10 +1,10 @@
 //! 2023-2024 [Rask AI](https://www.rask.ai) is an AI-powered video localization and dubbing platform.
 //!
-//! I worked as a Senior Python Engineer on the main backend product and dedicated API for enterprise clients.
+//! I worked as a Senior Python Engineer on the main backend product and the dedicated API for enterprise clients.
 //! The company serves over 2 million users with automatic translation and dubbing into 130+ languages.
 use resume_macro::Project;
 
-/// Main backend product for Rask AI video localization platform.
+/// Main backend product for the Rask AI video localization platform.
 ///
 /// Core backend service handling video and audio processing, AI-powered translation and dubbing workflows.
 /// Built with Python, FastAPI, SQS, and DynamoDB.
@@ -49,7 +49,7 @@ Key achievements:
 * Designed database schema and data models for PostgreSQL
 * Implemented async task processing with RabbitMQ for background jobs
 * Built comprehensive API documentation and client integration guides
-* Integrated with main backend via DynamoDB for synchronizing billing and usage limits statistics
+* Integrated with the main backend via DynamoDB to synchronize billing and usage limit statistics
 * Established API versioning and backward compatibility strategy
 * Delivered production-ready API serving enterprise clients at scale"#
 )]

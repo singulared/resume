@@ -62,7 +62,7 @@ pub struct WorkatoFiles;
 
 /// Event exchange and subscription platform for the Workato ecosystem.
 ///
-/// Event exchange and subscription platform built on Kafka with a simplified interface built with Poem.
+/// Event exchange and subscription platform built on Kafka, with a simplified interface implemented in Poem.
 /// Provides event streaming capabilities for integration workflows.
 #[derive(Project)]
 #[project(parent = Workato)]
@@ -79,5 +79,5 @@ Limited contributions focused on:
 #[tech(languages::Rust, "Rust is the main programming language for this project.")]
 #[tech(frameworks::Kafka, "Message broker for event streaming.")]
 #[tech(frameworks::Tokio, "Project was built on top of Tokio async runtime.")]
-#[tech(frameworks::Poem, "Web framework used for building simplified interface.")]
+#[tech(frameworks::Poem, "Web framework used to build the simplified interface.")]
 pub struct WorkatoStreams;

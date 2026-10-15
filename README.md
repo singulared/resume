@@ -15,17 +15,17 @@ I am interested in the following technology stack:
 - Databases (PostgreSQL, ClickHouse, Cassandra)
 - Distributed systems (CRDT, Raft)
 
-I have quite a good experience in leading backend engineering mostly in **[Rambler]**. The main responsibilities in this position were: 
+I have solid experience leading backend engineering, mostly at **[Rambler]**. My main responsibilities in this role were:
 
-- Technical and architecture decisions with priority in code quality and maintainability
-- People management: interviews, onboarding, 1to1, mentoring, review
-- interaction with business: meetings, planning, discussing business decisions, discussing workflow
+- Technical and architecture decisions, prioritizing code quality and maintainability
+- People management: interviews, onboarding, 1:1s, mentoring, reviews
+- Interaction with the business: meetings, planning, discussing business decisions and workflows
 
-Btw I started some open source projects like **[Hitbox]**. It is a high-performance caching framework for Rust applications and caching reverse proxy daemon.
+I also started open-source projects such as **[Hitbox]**, a high-performance caching framework for Rust applications and a caching reverse proxy daemon.
 
-In addition, I am an information security analyst and cryptographer as part of my university specialization.
+In addition, I am an information security analyst and cryptographer by university training.
 
-As a hobby, I really like **embedded development** and working with some Linux-based devices such as [PinePhone], [PinePhonePro], [PineTime] etc.
+As a hobby, I really like **embedded development** and working with PINE64 devices such as the [PinePhone], [PinePhonePro] and [PineTime].
 
 
 [Hitbox]: https://github.com/hit-box/hitbox/
