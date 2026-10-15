@@ -21,7 +21,7 @@ use resume_macro::Project;
 * Project uses Cassandra and Python 3.5 with asyncio as backend"#
 )]
 #[tech(languages::Python, "Python was a main programming language on this project.")]
-#[tech(languages::Erlang, "Used for parts of the event-processing backend.")]
+#[tech(languages::Erlang, "Used as part of the Riak database.")]
 #[tech(databases::Riak, "Main storage.")]
 #[tech(databases::Cassandra, "Secondary storage for analytics.")]
 #[tech(frameworks::AsyncIO, "Project was built on top of asyncio.")]
