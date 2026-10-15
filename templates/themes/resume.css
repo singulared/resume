@@ -1,0 +1,289 @@
+/* Resume theme — Catppuccin (Latte for light, Frappé for dark) via CSS custom
+ * properties. Light is the default; dark applies automatically via
+ * `prefers-color-scheme` unless light is forced, and either scheme can be
+ * forced via `:root[data-theme="dark|light"]` (the toggle / the CLI --theme). */
+
+/* Catppuccin Latte */
+:root {
+    --bg: #eff1f5;            /* base */
+    --fg: #4c4f69;            /* text */
+    --heading: #4c4f69;       /* text */
+    --heading-2: #5c5f77;     /* subtext1 */
+    --heading-4: #6c6f85;     /* subtext0 */
+    --muted: #8c8fa1;         /* overlay1 */
+    --quote: #6c6f85;         /* subtext0 */
+    --link: #1e66f5;          /* blue */
+    --panel: #e6e9ef;         /* mantle */
+    --project-bg: #eff1f5;    /* base */
+    --code-bg: #ccd0da;       /* surface0 */
+    --border-strong: #8839ef; /* mauve */
+    --border-soft: #bcc0cc;   /* surface1 */
+    --border-accent: #acb0be; /* surface2 */
+}
+
+/* Catppuccin Frappé */
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme="light"]) {
+        --bg: #303446;            /* base */
+        --fg: #c6d0f5;            /* text */
+        --heading: #c6d0f5;       /* text */
+        --heading-2: #b5bfe2;     /* subtext1 */
+        --heading-4: #a5adce;     /* subtext0 */
+        --muted: #838ba7;         /* overlay1 */
+        --quote: #a5adce;         /* subtext0 */
+        --link: #8caaee;          /* blue */
+        --panel: #292c3c;         /* mantle */
+        --project-bg: #303446;    /* base */
+        --code-bg: #414559;       /* surface0 */
+        --border-strong: #ca9ee6; /* mauve */
+        --border-soft: #51576d;   /* surface1 */
+        --border-accent: #626880; /* surface2 */
+    }
+}
+
+:root[data-theme="dark"] {
+    --bg: #303446;            /* base */
+    --fg: #c6d0f5;            /* text */
+    --heading: #c6d0f5;       /* text */
+    --heading-2: #b5bfe2;     /* subtext1 */
+    --heading-4: #a5adce;     /* subtext0 */
+    --muted: #838ba7;         /* overlay1 */
+    --quote: #a5adce;         /* subtext0 */
+    --link: #8caaee;          /* blue */
+    --panel: #292c3c;         /* mantle */
+    --project-bg: #303446;    /* base */
+    --code-bg: #414559;       /* surface0 */
+    --border-strong: #ca9ee6; /* mauve */
+    --border-soft: #51576d;   /* surface1 */
+    --border-accent: #626880; /* surface2 */
+}
+
+html {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+}
+
+@page {
+    margin: 2cm;
+    @bottom-center { content: none; }
+    @bottom-left { content: none; }
+    @bottom-right { content: none; }
+}
+
+body {
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 40px 20px;
+    line-height: 1.5;
+    color: var(--fg);
+    background-color: var(--bg);
+    font-size: 12pt;
+}
+
+h1 {
+    color: var(--heading);
+    border-bottom: 3px solid var(--border-strong);
+    padding-bottom: 10px;
+    font-size: 1.8em;
+    margin-top: 30px;
+    margin-bottom: 15px;
+    font-weight: 600;
+}
+
+h2 {
+    color: var(--heading-2);
+    border-bottom: 2px solid var(--border-soft);
+    padding-bottom: 6px;
+    margin-top: 25px;
+    margin-bottom: 12px;
+    font-size: 1.4em;
+    font-weight: 600;
+}
+
+h3 {
+    color: var(--heading-2);
+    margin-top: 15px;
+    margin-bottom: 8px;
+    font-size: 1.15em;
+    font-weight: 600;
+}
+
+h4 {
+    color: var(--heading-4);
+    margin-top: 12px;
+    margin-bottom: 6px;
+    font-size: 1.05em;
+    font-weight: 600;
+}
+
+p {
+    margin: 8px 0;
+    text-align: justify;
+    font-size: 11pt;
+}
+
+ul {
+    margin: 10px 0;
+    padding-left: 25px;
+}
+
+li {
+    margin: 4px 0;
+    font-size: 11pt;
+}
+
+blockquote {
+    border-left: 4px solid var(--border-strong);
+    padding: 12px 15px;
+    margin: 15px 0;
+    font-style: italic;
+    color: var(--quote);
+    background-color: var(--panel);
+    font-size: 11pt;
+}
+
+strong {
+    color: var(--heading);
+    font-weight: 600;
+}
+
+a {
+    color: var(--link);
+    text-decoration: none;
+    border-bottom: 1px dotted var(--link);
+}
+
+a:hover {
+    border-bottom: 1px solid var(--link);
+}
+
+code {
+    background-color: var(--code-bg);
+    color: var(--fg);
+    padding: 2px 4px;
+    border-radius: 3px;
+    font-family: 'Courier New', monospace;
+    font-size: 10pt;
+}
+
+img[src*="shields.io"] {
+    height: 18px;
+    width: auto;
+    margin: 2px 3px;
+    vertical-align: middle;
+}
+
+.section {
+    margin-bottom: 30px;
+    page-break-inside: avoid;
+}
+
+.work-section {
+    margin-bottom: 20px;
+    padding: 12px;
+    background-color: var(--panel);
+    border-left: 4px solid var(--border-strong);
+    page-break-inside: avoid;
+}
+
+.project {
+    margin-bottom: 15px;
+    padding: 10px 12px;
+    background-color: var(--project-bg);
+    border-left: 3px solid var(--border-accent);
+    page-break-inside: avoid;
+}
+
+.opensource-project {
+    margin-bottom: 12px;
+    padding: 8px 10px;
+    background-color: var(--panel);
+    border-left: 3px solid var(--border-accent);
+    page-break-inside: avoid;
+    font-size: 10pt;
+}
+
+.opensource-project h3 {
+    font-size: 1.05em;
+    margin-top: 8px;
+    margin-bottom: 5px;
+}
+
+.opensource-project p {
+    font-size: 10pt;
+    margin: 5px 0;
+}
+
+.role {
+    font-size: 0.8em;
+    color: var(--muted);
+    font-weight: normal;
+    font-style: italic;
+}
+
+.description {
+    margin: 6px 0;
+}
+
+.highlights {
+    margin: 6px 0 10px;
+}
+
+.contact-info {
+    background-color: var(--panel);
+    padding: 15px;
+    border-radius: 5px;
+    margin: 20px 0;
+}
+
+.contact-info ul {
+    list-style: none;
+    padding-left: 0;
+}
+
+.contact-info li {
+    margin: 5px 0;
+}
+
+/* Color-scheme toggle button (screen only). */
+.theme-toggle {
+    position: fixed;
+    top: 16px;
+    right: 16px;
+    width: 40px;
+    height: 40px;
+    padding: 0;
+    border-radius: 50%;
+    border: 1px solid var(--border-soft);
+    background-color: var(--panel);
+    color: var(--fg);
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    z-index: 1000;
+    box-shadow: 0 1px 4px rgba(0, 0, 0, 0.15);
+}
+
+.theme-toggle:hover {
+    border-color: var(--link);
+}
+
+@media print {
+    body {
+        padding: 0;
+        max-width: 100%;
+    }
+
+    h1, h2, h3, h4 {
+        page-break-after: avoid;
+    }
+
+    .section, .work-section, .project, .opensource-project {
+        page-break-inside: avoid;
+    }
+
+    .theme-toggle {
+        display: none !important;
+    }
+}
