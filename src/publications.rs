@@ -1,5 +1,5 @@
 //! Publications and articles
-use resume_macro::CleanupDocs;
+use resume_macro::{CleanupDocs, Publication};
 
 /// Link to article or publication
 pub trait Link<Language> {}
@@ -22,7 +22,12 @@ pub trait Link<Language> {}
 ///     * Conclusion
 ///
 /// You can see video version: [crate::conferences::RustForPythonDevelopers]
-#[derive(CleanupDocs)]
+#[derive(CleanupDocs, Publication)]
+#[publication(
+    title = "Rust for Python developers",
+    url = "https://habr.com/ru/company/rambler_group/blog/533268/",
+    year = "2020"
+)]
 pub struct RustForPythonDevelopers;
 /// [Rust for Python developers](https://habr.com/ru/company/rambler_group/blog/533268/)
 impl<Ru> Link<Ru> for RustForPythonDevelopers {}

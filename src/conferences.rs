@@ -131,3 +131,50 @@ pub struct MoscowPythonPodcast2020;
 impl Speaker for MoscowPythonPodcast2020 {}
 /// <iframe width="1279" height="719" src="https://www.youtube.com/embed/d9suAx7A6VM" title="Moscow Python Podcast. Рефакторинг проектов по-взрослому (level: middle)" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 impl<Ru> Video<Ru> for MoscowPythonPodcast2020 {}
+
+/// Conference / speaking entries submitted to inventory for the template/markdown
+/// views. Private (kept out of rustdoc), mirroring [`crate::ConferencesHistory`].
+mod conferences_inventory {
+    use resume_macro::Conference;
+
+    #[derive(Conference)]
+    #[conference(name = "RustCon Russia", year = "2021, 2022", role = "Program Director", url = "https://rustcon.ru/")]
+    /// One of the program directors of the biggest Rust conference in Russia.
+    struct RustCon;
+
+    #[derive(Conference)]
+    #[conference(name = "PyCon Russia", year = "2021", role = "Speaker", url = "https://pycon.ru/")]
+    /// Talk on the practical use of optional static typing in Python.
+    struct PyCon;
+
+    #[derive(Conference)]
+    #[conference(name = "Moscow Rust Meetup", year = "2021", role = "Speaker")]
+    /// "The experience of switching to Rust, or how we got into open source."
+    struct MoscowRustMeetup;
+
+    #[derive(Conference)]
+    #[conference(name = "Yandex School of Data Analysis (SHAD)", year = "2021-2023", role = "Lecturer")]
+    /// Rust lecturer at the Yandex School of Data Analysis.
+    struct Shad;
+
+    #[derive(Conference)]
+    #[conference(name = "DevConf", year = "2016", role = "Speaker", url = "https://devconf.ru")]
+    /// Talk on writing an asynchronous Python driver for Riak (aioriak).
+    struct DevConf;
+
+    #[derive(Conference)]
+    #[conference(name = "Moscow Python Meetup", year = "2016", role = "Speaker", url = "https://moscowpython.ru")]
+    /// Talk on the asyncio client for Riak and a comparison of approaches.
+    struct MoscowPythonMeetup;
+
+    #[derive(Conference)]
+    #[conference(name = "Rambler&Co Meetups", year = "2015-2022", role = "Moderator & Speaker")]
+    /// Moderator and presenter at Rambler DevOps and Python meetups, including the
+    /// "Rust for Python developers" series.
+    struct RamblerMeetup;
+
+    #[derive(Conference)]
+    #[conference(name = "Moscow Python Podcast", year = "2020", role = "Guest")]
+    /// Guest episode on refactoring and rewriting large projects in Rust.
+    struct MoscowPythonPodcast;
+}

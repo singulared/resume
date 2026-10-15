@@ -10,17 +10,78 @@
 #![doc = include_str!("../README.md")]
 
 use conferences::{
-    roles::ProgramDirector, DevConf2016, MoscowPythonMeetup2016, MoscowPythonPodcast2020,
-    MoscowRustMeetup2021, PyCon2021, RamblerDevOps2021, RamblerPython2021, RustCon2021,
-    RustCon2022, RustForPythonDevelopers,
+    DevConf2016, MoscowPythonMeetup2016, MoscowPythonPodcast2020, MoscowRustMeetup2021, PyCon2021,
+    RamblerDevOps2021, RamblerPython2021, RustCon2021, RustCon2022, RustForPythonDevelopers,
+    roles::ProgramDirector,
 };
 use opensource::{
-    ActixWebValidator, AioHTTP, AioRiak, Author, BashoDocs, ChromebookKernel, Conflow, Contributor,
-    DataFusionPostgres, FlaskHmacAuth, FlaskRestful, Hitbox, Hitboxd, Poetry, PyJasperClient,
-    Shortland, SlogStdlog, Swayboard, SwayipcRs, BB8,
+    ActixWebValidator, AioHTTP, AioRiak, Author, BB8, BashoDocs, ChromebookKernel, Conflow,
+    Contributor, DataFusionPostgres, FlaskHmacAuth, FlaskRestful, Hitbox, Hitboxd, Poetry,
+    PyJasperClient, Shortland, SlogStdlog, Swayboard, SwayipcRs,
 };
 #[doc(hidden)]
 pub use resume_macro::CleanupDocs;
+use resume_macro::Profile;
+
+// Export resume generation data structures
+pub mod resume_data;
+
+// Example demonstrating rustdoc generation from derive macros
+#[cfg(doc)]
+pub mod rustdoc_example {
+    //! This module demonstrates how the derive macros generate rustdoc
+
+    use resume_macro::{ResumeOpenSource, ResumeProject, ResumeWork};
+    use crate::roles::Developer;
+
+    /// Example company demonstrating rustdoc generation.
+    /// This docstring becomes part of the generated documentation.
+    #[derive(ResumeWork)]
+    #[resume(
+        company = "Example Corp",
+        url = "https://example.com",
+        role = "Senior Engineer",
+        period = "2020-2023"
+    )]
+    pub struct ExampleCorp;
+
+    /// Example project showing how achievements and technologies
+    /// are formatted in the generated rustdoc.
+    ///
+    /// The macro automatically generates trait implementations for all technologies
+    /// using path syntax (e.g., frameworks::Tokio, languages::Rust).
+    ///
+    /// Achievements support multiple formats:
+    /// - Multiple strings separated by commas
+    /// - Raw strings (r#"..."#) for strings with quotes
+    /// - Single multiline raw string where each line becomes an achievement
+    #[derive(ResumeProject)]
+    #[resume(
+        parent = "ExampleCorp",
+        role = Developer,
+        technology(languages::Rust, "Main programming language."),
+        technology(frameworks::Tokio, "Async runtime for concurrent operations."),
+        technology(frameworks::Axum, "Web framework for HTTP server."),
+        technology(databases::Postgresql, "Relational database for structured data.")
+    )]
+    #[achievements(r#"
+        Built a high-performance system with Rust and Tokio
+        Reduced latency by 50% using "zero-copy" techniques
+        Implemented comprehensive monitoring and observability
+        Designed API architecture with REST and GraphQL support
+    "#)]
+    pub struct ExampleProject;
+
+    /// Example open source project demonstrating language and URL
+    /// formatting in rustdoc.
+    #[derive(ResumeOpenSource)]
+    #[resume(
+        role = "Author",
+        url = "https://github.com/example/project",
+        language = "Rust"
+    )]
+    pub struct ExampleOpenSource;
+}
 
 /// [@singulared](https://t.me/singulared)
 pub const TELEGRAM: &str = "@singulared";
@@ -55,7 +116,23 @@ use technologies::{
 pub use work::WorkHistory;
 
 /// Information about me and my personal interests.
-#[derive(CleanupDocs)]
+#[derive(CleanupDocs, Profile)]
+#[profile(
+    name = "Maxim Belousov",
+    tagline = "Rustacean, Crypto-anarchist and Techno-punk",
+    email = "work@singulared.space",
+    phone = "+79190007134",
+    telegram = "@singulared",
+    github = "https://github.com/singulared",
+    linkedin = "https://www.linkedin.com/in/singulared/",
+    birthdate = "28.12.1988"
+)]
+#[skill("Rust")]
+#[skill("Python")]
+#[skill("Distributed Systems")]
+#[skill("Linux")]
+#[skill("PostgreSQL")]
+#[skill("ClickHouse")]
 pub struct Me;
 /// My technical interests
 impl TechnicalInterests for Me {}
@@ -104,6 +181,23 @@ impl Tennis for Me {}
 /// And other information security competitions.
 impl CTF for Me {}
 
+/// Personal interests and hobbies submitted to inventory for the template/markdown
+/// views. Private (kept out of rustdoc); mirrors the trait-impl docs on [`Me`].
+mod interests {
+    use resume_macro::Interest;
+
+    #[derive(Interest)]
+    #[interest(kind = "tech", name = "Rust", desc = "Into Rust since 2018 — from CLI tools and playground experiments to open-source projects like Hitbox and production systems.")]
+    #[interest(kind = "tech", name = "Distributed systems", desc = "Exploring distributed systems since 2015 (starting with Riak); CRDTs are a particular interest.")]
+    #[interest(kind = "tech", name = "Cryptography", desc = "Studied cryptography as a Ph.D. student; dissertation on SMT algorithms.")]
+    #[interest(kind = "tech", name = "Embedded systems", desc = "Microcontrollers and embedded development — kernels for Motorola A1200 and Toshiba AC100, Samsung ARM Chromebook, and PINE64 devices.")]
+    #[interest(kind = "hobby", name = "Cross-country biking", desc = "I really like cross-country biking.")]
+    #[interest(kind = "hobby", name = "Music & piano", desc = "Musician and piano player.")]
+    #[interest(kind = "hobby", name = "Tennis", desc = "Tennis player since 2004.")]
+    #[interest(kind = "hobby", name = "CTF", desc = "Honeypot team — RuCTF/RuCTFe, iCTF, Defcon and other information-security competitions.")]
+    struct Interests;
+}
+
 /// Education history
 #[derive(CleanupDocs)]
 pub enum EducationHistory {
@@ -113,6 +207,32 @@ pub enum EducationHistory {
     /// *2006 - 2011* Information Security Specialist (Complex security of information objects)  
     /// Vladimir State University named after Alexander and Nikolay Stoletovs
     Specialist,
+}
+
+/// Education entries submitted to inventory for the template/markdown views.
+/// Private (kept out of rustdoc), mirroring [`EducationHistory`].
+mod education_inventory {
+    use resume_macro::Education;
+
+    #[derive(Education)]
+    #[education(
+        institution = "Vladimir State University",
+        degree = "Ph.D. Student",
+        field = "System analysis, management, and information processing",
+        period = "2011-2014"
+    )]
+    /// Ph.D. research on SMT algorithms and applied cryptography.
+    struct PhdStudent;
+
+    #[derive(Education)]
+    #[education(
+        institution = "Vladimir State University",
+        degree = "Information Security Specialist",
+        field = "Complex security of information objects",
+        period = "2006-2011"
+    )]
+    /// Specialist degree in complex security of information objects.
+    struct Specialist;
 }
 
 /// Opensource projects
@@ -188,3 +308,4 @@ pub mod publications;
 pub mod roles;
 pub mod technologies;
 pub mod work;
+pub mod work_experimental;

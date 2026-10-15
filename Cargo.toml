@@ -16,6 +16,8 @@ publish = false
 [dependencies]
 resume-macro = { path = "./resume-macro" }
 simple-mermaid = "0.2"
+serde = { version = "1.0", features = ["derive"] }
+inventory = "0.3"
 
 [features]
 team-lead = []
