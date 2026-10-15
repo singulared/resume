@@ -23,65 +23,10 @@ use opensource::{
 pub use resume_macro::CleanupDocs;
 use resume_macro::Profile;
 
-// Export resume generation data structures
+// Data model behind the markdown/HTML/PDF views; public for the binary, hidden
+// from the rustdoc resume.
+#[doc(hidden)]
 pub mod resume_data;
-
-// Example demonstrating rustdoc generation from derive macros
-#[cfg(doc)]
-pub mod rustdoc_example {
-    //! This module demonstrates how the derive macros generate rustdoc
-
-    use resume_macro::{ResumeOpenSource, ResumeProject, ResumeWork};
-    use crate::roles::Developer;
-
-    /// Example company demonstrating rustdoc generation.
-    /// This docstring becomes part of the generated documentation.
-    #[derive(ResumeWork)]
-    #[resume(
-        company = "Example Corp",
-        url = "https://example.com",
-        role = "Senior Engineer",
-        period = "2020-2023"
-    )]
-    pub struct ExampleCorp;
-
-    /// Example project showing how achievements and technologies
-    /// are formatted in the generated rustdoc.
-    ///
-    /// The macro automatically generates trait implementations for all technologies
-    /// using path syntax (e.g., frameworks::Tokio, languages::Rust).
-    ///
-    /// Achievements support multiple formats:
-    /// - Multiple strings separated by commas
-    /// - Raw strings (r#"..."#) for strings with quotes
-    /// - Single multiline raw string where each line becomes an achievement
-    #[derive(ResumeProject)]
-    #[resume(
-        parent = "ExampleCorp",
-        role = Developer,
-        technology(languages::Rust, "Main programming language."),
-        technology(frameworks::Tokio, "Async runtime for concurrent operations."),
-        technology(frameworks::Axum, "Web framework for HTTP server."),
-        technology(databases::Postgresql, "Relational database for structured data.")
-    )]
-    #[achievements(r#"
-        Built a high-performance system with Rust and Tokio
-        Reduced latency by 50% using "zero-copy" techniques
-        Implemented comprehensive monitoring and observability
-        Designed API architecture with REST and GraphQL support
-    "#)]
-    pub struct ExampleProject;
-
-    /// Example open source project demonstrating language and URL
-    /// formatting in rustdoc.
-    #[derive(ResumeOpenSource)]
-    #[resume(
-        role = "Author",
-        url = "https://github.com/example/project",
-        language = "Rust"
-    )]
-    pub struct ExampleOpenSource;
-}
 
 /// [@singulared](https://t.me/singulared)
 pub const TELEGRAM: &str = "@singulared";
