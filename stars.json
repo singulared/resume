@@ -1,0 +1,20 @@
+{
+  "JayceFayne/swayipc-rs": 115,
+  "Phillipmartin/flask-hmacauth": 11,
+  "agaoglu/pyjasperclient": 27,
+  "aio-libs/aiohttp": 16432,
+  "basho/basho_docs": 169,
+  "datafusion-contrib/datafusion-postgres": 145,
+  "djc/bb8": 944,
+  "flask-restful/flask-restful": 6919,
+  "hit-box/hitbox": 142,
+  "moka-rs/moka": 2573,
+  "python-poetry/poetry": 34274,
+  "rambler-digital-solutions/actix-web-validator": 111,
+  "rambler-digital-solutions/aioriak": 26,
+  "singulared/chromebook-kernel": 13,
+  "singulared/conflow": 8,
+  "singulared/shortland": 2,
+  "singulared/swayboard": 0,
+  "slog-rs/stdlog": 12
+}
