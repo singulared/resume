@@ -8,14 +8,18 @@
 //!   * `stars`    — fetch GitHub star counts for the open-source repos and cache
 //!     them; `generate --stars` reads the cache to show the counts
 
-use anyhow::{Context, Result};
+use anyhow::{bail, Context, Result};
 use askama::Template;
 use clap::{Args, Parser, Subcommand, ValueEnum};
 use resume::WorkHistory;
 use resume::resume_data::*;
+use serde::Deserialize;
+use std::cmp::Ordering;
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
 use std::process::Command;
+use std::time::Duration;
+use std::{env, fs, thread};
 
 /// Askama template filters. `markdownify` renders Markdown doc-comment fields to
 /// HTML (pair with `|safe`) and `md` prepares them for the Markdown view; both
@@ -23,6 +27,7 @@ use std::process::Command;
 /// [`filters::set_stars`].
 mod filters {
     use super::{format_count, repo_path};
+    use askama::Result;
     use pulldown_cmark::{html, BrokenLink, CowStr, Event, Options, Parser, Tag, TagEnd};
     use std::collections::HashMap;
     use std::ops::Range;
@@ -40,7 +45,7 @@ mod filters {
     }
 
     /// Markdown doc-comment text to HTML.
-    pub fn markdownify(s: &str) -> askama::Result<String> {
+    pub fn markdownify(s: &str) -> Result<String> {
         let source = strip_intra_doc_links(s);
         let mut out = String::new();
         html::push_html(&mut out, Parser::new_ext(&source, options()));
@@ -48,18 +53,18 @@ mod filters {
     }
 
     /// Markdown doc-comment text for the Markdown view.
-    pub fn md(s: &str) -> askama::Result<String> {
+    pub fn md(s: &str) -> Result<String> {
         Ok(strip_intra_doc_links(s))
     }
 
     /// The first paragraph: the short form, like rustdoc's item summaries.
-    pub fn first_paragraph(s: &str) -> askama::Result<String> {
+    pub fn first_paragraph(s: &str) -> Result<String> {
         Ok(s.split("\n\n").next().unwrap_or_default().to_string())
     }
 
     /// `2024-present` -> `2024 — Present`, `2021-2023` -> `2021 — 2023`; other
     /// text (`2021, 2022`) as is.
-    pub fn period(s: &str) -> askama::Result<String> {
+    pub fn period(s: &str) -> Result<String> {
         Ok(match s.split_once('-') {
             Some((from, to)) if from.len() == 4 && from.bytes().all(|b| b.is_ascii_digit()) => {
                 format!("{from} — {}", if to == "present" { "Present" } else { to })
@@ -69,20 +74,20 @@ mod filters {
     }
 
     /// `https://www.linkedin.com/in/singulared/` -> `linkedin.com/in/singulared`.
-    pub fn host(url: &str) -> askama::Result<String> {
+    pub fn host(url: &str) -> Result<String> {
         let url = url.split_once("://").map_or(url, |(_, rest)| rest);
         Ok(url.trim_start_matches("www.").trim_end_matches('/').to_string())
     }
 
     /// `@singulared` -> `t.me/singulared`.
-    pub fn telegram(handle: &str) -> askama::Result<String> {
+    pub fn telegram(handle: &str) -> Result<String> {
         Ok(format!("t.me/{}", handle.trim_start_matches('@')))
     }
 
     /// Compact cached star count (`1.8k`) for a `github.com/owner/repo` URL.
     /// Empty when the URL isn't a GitHub repo, has no cached count, or the repo
     /// has no stars, so the template can skip it.
-    pub fn stars(url: &str) -> askama::Result<String> {
+    pub fn stars(url: &str) -> Result<String> {
         let count = repo_path(url).and_then(|repo| STARS.get()?.get(&repo).copied());
         Ok(match count {
             Some(count) if count > 0 => format_count(count),
@@ -397,8 +402,8 @@ fn collect_resume_data(verbose: bool) -> Result<ResumeData> {
         inventory::iter::<OpenSourceProject>().cloned().collect();
     // Authors first, then contributors; within a group by manual rank, then name.
     opensource.sort_by(|a, b| match (a.role, b.role) {
-        ("Author", "Contributor") => std::cmp::Ordering::Less,
-        ("Contributor", "Author") => std::cmp::Ordering::Greater,
+        ("Author", "Contributor") => Ordering::Less,
+        ("Contributor", "Author") => Ordering::Greater,
         _ => a.rank.cmp(&b.rank).then_with(|| a.name.cmp(b.name)),
     });
 
@@ -469,7 +474,7 @@ fn generate_markdown(output_dir: &Path, data: &ResumeData, verbose: bool) -> Res
     };
     let rendered = template.render().context("Failed to render Markdown template")?;
     let output_path = output_dir.join("resume.md");
-    std::fs::write(&output_path, rendered).context("Failed to write Markdown file")?;
+    fs::write(&output_path, rendered).context("Failed to write Markdown file")?;
     if verbose {
         println!("   ✓ {}", output_path.display());
     }
@@ -501,7 +506,7 @@ fn generate_html(
     };
     let rendered = template.render().context("Failed to render HTML template")?;
     let output_path = output_dir.join("resume.html");
-    std::fs::write(&output_path, rendered).context("Failed to write HTML file")?;
+    fs::write(&output_path, rendered).context("Failed to write HTML file")?;
     if verbose {
         println!("   ✓ {}", output_path.display());
     }
@@ -524,7 +529,7 @@ fn generate_pdf(html_path: &Path, output_dir: &Path, verbose: bool) -> Result<Pa
         .output()
         .context("Failed to execute chromium. Make sure chromium is installed.")?;
     if !output.status.success() {
-        anyhow::bail!("Chromium failed: {}", String::from_utf8_lossy(&output.stderr));
+        bail!("Chromium failed: {}", String::from_utf8_lossy(&output.stderr));
     }
     if verbose {
         println!("   ✓ {}", pdf_path.display());
@@ -533,11 +538,11 @@ fn generate_pdf(html_path: &Path, output_dir: &Path, verbose: bool) -> Result<Pa
 }
 
 fn run_generate(args: GenerateArgs) -> Result<()> {
-    std::fs::create_dir_all(&args.output).context("Failed to create output directory")?;
+    fs::create_dir_all(&args.output).context("Failed to create output directory")?;
 
     // Star badges are opt-in: rendered only when a cache is explicitly passed.
     if let Some(path) = &args.stars {
-        let data = std::fs::read_to_string(path).with_context(|| {
+        let data = fs::read_to_string(path).with_context(|| {
             format!(
                 "Failed to read star cache {} (run `resume stars` to create it)",
                 path.display()
@@ -661,10 +666,10 @@ fn run_check(data: &ResumeData) -> Result<()> {
     }
 
     if !empty.is_empty() {
-        anyhow::bail!("empty section(s): {}", empty.join(", "));
+        bail!("empty section(s): {}", empty.join(", "));
     }
     if !readme_in_sync {
-        anyhow::bail!("README.md does not contain the profile summary");
+        bail!("README.md does not contain the profile summary");
     }
     println!("\nAll sections populated.");
     Ok(())
@@ -695,12 +700,12 @@ fn fetch_stars(repo: &str, token: Option<&str>) -> Result<u64> {
 
     let output = cmd.output().context("failed to run curl (is it installed?)")?;
     if !output.status.success() {
-        anyhow::bail!("curl exited with {}", output.status);
+        bail!("curl exited with {}", output.status);
     }
 
     // Success responses carry `stargazers_count`; errors (rate limit, not found)
     // carry a `message` instead — surface it so failures are self-explanatory.
-    #[derive(serde::Deserialize)]
+    #[derive(Deserialize)]
     struct GhResponse {
         stargazers_count: Option<u64>,
         message: Option<String>,
@@ -709,18 +714,18 @@ fn fetch_stars(repo: &str, token: Option<&str>) -> Result<u64> {
         serde_json::from_slice(&output.stdout).context("could not parse the GitHub response")?;
     match (response.stargazers_count, response.message) {
         (Some(stars), _) => Ok(stars),
-        (None, Some(message)) => anyhow::bail!("{message}"),
-        (None, None) => anyhow::bail!("no star count in the response"),
+        (None, Some(message)) => bail!("{message}"),
+        (None, None) => bail!("no star count in the response"),
     }
 }
 
 fn run_stars(args: StarsArgs) -> Result<()> {
-    let token = std::env::var("GITHUB_TOKEN").ok();
+    let token = env::var("GITHUB_TOKEN").ok();
     if token.is_none() {
         eprintln!("note: GITHUB_TOKEN not set — using the unauthenticated API (60 requests/hour).\n");
     }
 
-    let delay = std::time::Duration::from_millis(args.delay);
+    let delay = Duration::from_millis(args.delay);
     let mut counts: BTreeMap<String, u64> = BTreeMap::new();
     let mut failed = 0usize;
     let mut first = true;
@@ -730,7 +735,7 @@ fn run_stars(args: StarsArgs) -> Result<()> {
         };
         // Throttle between requests to stay under GitHub's secondary rate limit.
         if !first {
-            std::thread::sleep(delay);
+            thread::sleep(delay);
         }
         first = false;
         match fetch_stars(&repo, token.as_deref()) {
@@ -746,7 +751,7 @@ fn run_stars(args: StarsArgs) -> Result<()> {
     }
 
     let json = serde_json::to_string_pretty(&counts).context("Failed to serialize star cache")?;
-    std::fs::write(&args.output, json)
+    fs::write(&args.output, json)
         .with_context(|| format!("Failed to write {}", args.output.display()))?;
     println!(
         "\nWrote {} star counts to {}{}.",
