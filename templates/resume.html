@@ -1,146 +1,217 @@
 <!DOCTYPE html>
-<html lang="en"{% if !initial_theme.is_empty() %} data-theme="{{ initial_theme }}"{% endif %}>
+<html lang="en" data-aesthetic="{{ style }}"{% if !initial_theme.is_empty() %} data-theme="{{ initial_theme }}" data-theme-default="{{ initial_theme }}"{% endif %}>
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta name="color-scheme" content="light dark">
-    <title>{{ personal.name }} - Resume</title>
-    <script>
-        // Apply a saved color-scheme preference before first paint (avoids a flash).
-        (function () {
-            try {
-                var t = localStorage.getItem('resume-theme');
-                if (t) document.documentElement.setAttribute('data-theme', t);
-            } catch (e) {}
-        })();
-    </script>
-    <style>{{ css|safe }}</style>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="color-scheme" content="light dark">
+<title>{{ personal.name }} — Resume</title>
+<style>{{ css|safe }}</style>
+<script>
+  // Apply saved tweaks (or the system scheme) before first paint to avoid a flash.
+  (function () {
+    var root = document.documentElement, t = {};
+    try { t = JSON.parse(localStorage.getItem('resume-tweaks') || '{}') || {}; } catch (e) {}
+    var sysDark = window.matchMedia && window.matchMedia('(prefers-color-scheme: dark)').matches;
+    if (t.aesthetic) root.setAttribute('data-aesthetic', t.aesthetic);
+    root.setAttribute('data-theme', t.theme || root.getAttribute('data-theme-default') || (sysDark ? 'dark' : 'light'));
+  })();
+</script>
 </head>
 <body>
 
-<h1>{{ personal.name }}</h1>
-
-<blockquote>{{ personal.tagline }}</blockquote>
-
-<p class="summary">{{ personal.summary }}</p>
-
-<div class="contact-info">
-    <ul>
-        <li><strong>Email:</strong> <a href="mailto:{{ personal.email }}">{{ personal.email }}</a></li>
-        <li><strong>Phone:</strong> {{ personal.phone }}</li>
-        <li><strong>Telegram:</strong> {{ personal.telegram }}</li>
-        <li><strong>GitHub:</strong> <a href="{{ personal.github }}">{{ personal.github }}</a></li>
-        <li><strong>LinkedIn:</strong> <a href="{{ personal.linkedin }}">{{ personal.linkedin }}</a></li>
-    </ul>
-    <p><strong>Skills:</strong> {{ personal.skills.join(", ") }}</p>
+<div class="appbar" id="appbar" aria-label="Appearance">
+  <button type="button" class="appbar-toggle" id="appbar-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Appearance settings" title="Appearance">Aa</button>
+  <div class="appbar-pop" id="appbar-pop" role="dialog" aria-label="Appearance" hidden>
+    <div class="pop-label">Style</div>
+    <div role="radiogroup" aria-label="Style">
+      <button type="button" role="radio" class="pop-style" data-style="minimal">
+        <span class="pop-name">Minimal</span><span class="pop-note">serif · quiet</span>
+      </button>
+      <button type="button" role="radio" class="pop-style" data-style="editorial">
+        <span class="pop-name">Editorial</span><span class="pop-note">numbered · mono labels</span>
+      </button>
+      <button type="button" role="radio" class="pop-style" data-style="punk">
+        <span class="pop-name">Punk</span><span class="pop-note">mono · accent bars</span>
+      </button>
+    </div>
+    <div class="pop-div"></div>
+    <div class="pop-label">Theme</div>
+    <div class="pop-theme" role="radiogroup" aria-label="Theme">
+      <button type="button" role="radio" data-theme-set="light"><span class="pop-ic">☀</span>Light</button>
+      <button type="button" role="radio" data-theme-set="dark"><span class="pop-ic">☾</span>Dark</button>
+    </div>
+  </div>
 </div>
 
-<div class="section">
-    <h2>Work Experience</h2>
+<div class="page">
 
+  <header class="masthead">
+    <h1 class="name">{{ personal.name }}</h1>
+    <p class="tagline">{{ personal.tagline }}</p>
+    <p class="summary">{{ personal.summary }}</p>
+    <ul class="contacts">
+      <li><a href="mailto:{{ personal.email }}">{{ personal.email }}</a></li>
+      <li><a href="https://{{ personal.telegram|telegram }}">{{ personal.telegram|telegram }}</a></li>
+      <li><a href="{{ personal.github }}">{{ personal.github|host }}</a></li>
+      <li><a href="{{ personal.linkedin }}">{{ personal.linkedin|host }}</a></li>
+      <li><span class="val">{{ personal.phone }}</span></li>
+    </ul>
+  </header>
+
+  <div class="skills">
+    <span class="skills-lbl">Core</span>
+    {%- for skill in personal.skills %}
+    <span class="skill">{{ skill }}</span>
+    {%- endfor %}
+  </div>
+  <nav class="jump" aria-label="Sections">
+    <a href="#experience">Experience</a>
+    <a href="#open-source">Open Source</a>
+    <a href="#speaking">Speaking</a>
+    <a href="#education">Education</a>
+    <a href="#publications">Publications</a>
+    <a href="#interests">Interests</a>
+  </nav>
+
+  <section class="block" id="experience">
+    <div class="section-head">
+      <span class="sec-num">01</span>
+      <span class="sec-title">Experience</span>
+      <span class="rule"></span>
+    </div>
     {% for job in work %}
-    <div class="work-section">
-        <h3>{{ job.company }} - {{ job.role }}</h3>
-        <p><em>{{ job.period }}</em> | <a href="{{ job.url }}">{{ job.url }}</a></p>
-        <div class="description">{{ job.description|markdownify|safe }}</div>
-
-        {% for project in job.projects %}
-        <div class="project">
-            <h4>{{ project.name }}</h4>
-            <div class="description">{{ project.description|markdownify|safe }}</div>
-
-            {% if !project.roles.is_empty() %}
-            <div class="highlights">
-            {% for role in project.roles %}{{ role.doc|markdownify|safe }}{% endfor %}
-            </div>
-            {% endif %}
-
-            {% if !project.technologies.is_empty() %}
-            <p><strong>Technologies:</strong> {{ project.technologies.join(", ") }}</p>
-            {% endif %}
+    <article class="job">
+      <div class="job-head">
+        <h3 class="job-title">{{ job.company }}</h3>
+        <span class="job-role">{{ job.role }}</span>
+        <span class="job-meta">
+          <span class="job-dates">{{ job.period|period }}</span>
+          <a href="{{ job.url }}">{{ job.url|host }}</a>
+        </span>
+      </div>
+      <p class="job-summary">{{ job.description }}</p>
+      {%- if !job.projects.is_empty() %}
+      <div class="projects">
+        {%- for project in job.projects %}
+        <div class="project" id="{{ project.key }}">
+          <h4 class="proj-name">{{ project.name }}{% if project.ongoing %} <span class="exp-flag" title="Ongoing">Experimental</span>{% endif %}</h4>
+          <div class="proj-desc md">{{ project.description|markdownify|safe }}</div>
+          {%- for role in project.roles %}
+          <div class="role md">
+            {%- if project.roles.len() > 1 && !role.period.is_empty() %}
+            <span class="role-period">{{ role.period|period }}</span>
+            {%- endif %}
+            {{ role.doc|markdownify|safe }}
+          </div>
+          {%- endfor %}
+          {%- if !project.technologies.is_empty() %}
+          <div class="tech">
+            <span class="t-lbl">stack</span>
+            {%- for tech in project.technologies %}<span class="tag">{{ tech }}</span>{% endfor %}
+          </div>
+          {%- endif %}
         </div>
-        {% endfor %}
+        {%- endfor %}
+      </div>
+      {%- endif %}
+    </article>
+    {% endfor %}
+  </section>
+
+  <section class="block" id="open-source">
+    <div class="section-head">
+      <span class="sec-num">02</span>
+      <span class="sec-title">Open Source</span>
+      <span class="rule"></span>
     </div>
-    {% endfor %}
-</div>
-
-<div class="section">
-    <h2>Open Source Contributions</h2>
-
-    {% for project in opensource %}
-    <div class="opensource-project">
-        <h3><a href="{{ project.url }}">{{ project.name }}</a> <span class="role">({{ project.role }})</span>{% if project.url|stars_badge != "" %} <img class="stars-badge" src="{{ project.url|stars_badge }}" alt="GitHub stars">{% endif %}</h3>
-        {% if !project.language.is_empty() %}<p><strong>Language:</strong> {{ project.language }}</p>{% endif %}
-        <div class="description">{{ project.description|markdownify|safe }}</div>
+    <div class="oss-grid">
+      {%- for project in opensource %}
+      <div class="oss">
+        <div class="oss-head">
+          <span class="oss-name"><a href="{{ project.url }}">{{ project.name }}</a></span>
+          <span class="oss-role">{{ project.role }}</span>
+          {%- let stars = project.url|stars %}
+          {%- if !stars.is_empty() %}
+          <span class="oss-stars"><span class="star">★</span> {{ stars }}</span>
+          {%- endif %}
+        </div>
+        {%- if !project.language.is_empty() %}
+        <span class="oss-lang">{{ project.language }}</span>
+        {%- endif %}
+        <div class="oss-desc md">{{ project.description|first_paragraph|markdownify|safe }}</div>
+      </div>
+      {%- endfor %}
     </div>
-    {% endfor %}
-</div>
+  </section>
 
-{% if !conferences.is_empty() %}
-<div class="section">
-    <h2>Conferences & Speaking</h2>
-
-    {% for conf in conferences %}
-    <div class="work-section">
-        <h3>{{ conf.name }} - {{ conf.role }}</h3>
-        <p><em>{{ conf.year }}</em>{% if conf.url != "" %} | <a href="{{ conf.url }}">{{ conf.url }}</a>{% endif %}</p>
-        <div class="description">{{ conf.description|markdownify|safe }}</div>
+  <section class="block" id="speaking">
+    <div class="section-head">
+      <span class="sec-num">03</span>
+      <span class="sec-title">Conferences &amp; Speaking</span>
+      <span class="rule"></span>
     </div>
-    {% endfor %}
-</div>
-{% endif %}
-
-{% if !education.is_empty() %}
-<div class="section">
-    <h2>Education</h2>
-
-    {% for edu in education %}
-    <div class="work-section">
-        <h3>{{ edu.institution }}</h3>
-        <p><strong>{{ edu.degree }}</strong> in {{ edu.field }}</p>
-        <p><em>{{ edu.period }}</em></p>
-        <div class="description">{{ edu.description|markdownify|safe }}</div>
+    <div class="entries">
+      {%- for conf in conferences %}
+      <div class="entry">
+        <div class="entry-title">{{ conf.name }}</div>
+        <div class="entry-meta">{% if conf.url.is_empty() %}{{ conf.year|period }}{% else %}<a href="{{ conf.url }}">{{ conf.year|period }}</a>{% endif %}</div>
+        <div class="entry-sub">{{ conf.role }}</div>
+        <div class="entry-desc md">{{ conf.description|markdownify|safe }}</div>
+      </div>
+      {%- endfor %}
     </div>
-    {% endfor %}
-</div>
-{% endif %}
+  </section>
 
-{% if !publications.is_empty() %}
-<div class="section">
-    <h2>Publications</h2>
-
-    {% for pub in publications %}
-    <div class="work-section">
-        <h3><a href="{{ pub.url }}">{{ pub.title }}</a></h3>
-        <p><em>{{ pub.year }}</em></p>
-        <div class="description">{{ pub.description|markdownify|safe }}</div>
+  <section class="block" id="education">
+    <div class="section-head">
+      <span class="sec-num">04</span>
+      <span class="sec-title">Education</span>
+      <span class="rule"></span>
     </div>
-    {% endfor %}
+    <div class="entries">
+      {%- for edu in education %}
+      <div class="entry">
+        <div class="entry-title">{{ edu.institution }}</div>
+        <div class="entry-meta">{{ edu.period|period }}</div>
+        <div class="entry-sub"><strong>{{ edu.degree }}</strong> — {{ edu.field }}</div>
+        <div class="entry-desc md">{{ edu.description|markdownify|safe }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="block" id="publications">
+    <div class="section-head">
+      <span class="sec-num">05</span>
+      <span class="sec-title">Publications</span>
+      <span class="rule"></span>
+    </div>
+    <div class="entries">
+      {%- for publication in publications %}
+      <div class="entry pub">
+        <div class="entry-title"><a href="{{ publication.url }}">{{ publication.title }}</a></div>
+        <div class="entry-meta">{{ publication.year }}</div>
+        <div class="entry-desc md">{{ publication.description|markdownify|safe }}</div>
+      </div>
+      {%- endfor %}
+    </div>
+  </section>
+
+  <section class="block" id="interests">
+    <div class="section-head">
+      <span class="sec-num">06</span>
+      <span class="sec-title">Interests</span>
+      <span class="rule"></span>
+    </div>
+    <div class="interests">
+      {%- for interest in interests %}
+      <div class="interest"><span class="dot">▪</span><strong>{{ interest.name }}</strong> — {{ interest.description }}</div>
+      {%- endfor %}
+    </div>
+  </section>
+
 </div>
-{% endif %}
 
-{% if !interests.is_empty() %}
-<div class="section">
-    <h2>Interests</h2>
-    <ul>
-    {% for interest in interests %}
-        <li><strong>{{ interest.name }}</strong> — {{ interest.description }}</li>
-    {% endfor %}
-    </ul>
-</div>
-{% endif %}
-
-<button id="theme-toggle" class="theme-toggle" type="button" aria-label="Toggle color scheme" title="Toggle light / dark">🌓</button>
-<script>
-    document.getElementById('theme-toggle').addEventListener('click', function () {
-        var root = document.documentElement;
-        var current = root.getAttribute('data-theme')
-            || (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light');
-        var next = current === 'dark' ? 'light' : 'dark';
-        root.setAttribute('data-theme', next);
-        try { localStorage.setItem('resume-theme', next); } catch (e) {}
-    });
-</script>
-
+<script>{{ script|safe }}</script>
 </body>
 </html>

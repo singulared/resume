@@ -4,70 +4,69 @@
 
 {{ personal.summary }}
 
----
-
-## Contact Information
-
 - **Email:** [{{ personal.email }}](mailto:{{ personal.email }})
+- **Telegram:** [{{ personal.telegram|telegram }}](https://{{ personal.telegram|telegram }})
+- **GitHub:** [{{ personal.github|host }}]({{ personal.github }})
+- **LinkedIn:** [{{ personal.linkedin|host }}]({{ personal.linkedin }})
 - **Phone:** {{ personal.phone }}
-- **Telegram:** {{ personal.telegram }}
-- **GitHub:** [{{ personal.github }}]({{ personal.github }})
-- **LinkedIn:** [{{ personal.linkedin }}]({{ personal.linkedin }})
 
-**Skills:** {{ personal.skills.join(", ") }}
+**Core:** {{ personal.skills.join(", ") }}
 
 ---
 
-## Work Experience
+## Experience
 
 {% for job in work -%}
-### {{ job.company }} - {{ job.role }}
+### {{ job.company }} — {{ job.role }}
 
-*{{ job.period }}* | [{{ job.url }}]({{ job.url }})
+*{{ job.period|period }}* · [{{ job.url|host }}]({{ job.url }})
 
 {{ job.description }}
 
 {% for project in job.projects -%}
-#### {{ project.name }}
+#### {{ project.name }}{% if project.ongoing %} *(experimental)*{% endif %}
 
-{{ project.description }}
+{{ project.description|md }}
 
-{% for role in project.roles %}{{ role.doc }}
+{% for role in project.roles -%}
+{% if project.roles.len() > 1 && !role.period.is_empty() -%}
+*{{ role.period|period }}*
+
+{% endif -%}
+{{ role.doc|md }}
 
 {% endfor -%}
 {% if !project.technologies.is_empty() -%}
-**Technologies:** {{ project.technologies.join(", ") }}
+**Stack:** {{ project.technologies.join(", ") }}
 
 {% endif -%}
 {% endfor -%}
 ---
 
 {% endfor %}
-
-## Open Source Contributions
+## Open Source
 
 {% for project in opensource -%}
-### [{{ project.name }}]({{ project.url }}) - {{ project.role }}{% if project.url|stars_badge != "" %} ![stars]({{ project.url|stars_badge }}){% endif %}
+### [{{ project.name }}]({{ project.url }}) — {{ project.role }}{% let stars = project.url|stars %}{% if !stars.is_empty() %} · ★ {{ stars }}{% endif %}
 
-{% if !project.language.is_empty() -%}**Language:** {{ project.language }}{% endif %}
+{% if !project.language.is_empty() -%}*{{ project.language }}*
 
-{{ project.description }}
+{% endif -%}
+{{ project.description|md }}
 
-{% endfor %}
-
+{% endfor -%}
 ---
 
 ## Conferences & Speaking
 
 {% for conf in conferences -%}
-### {{ conf.name }} - {{ conf.role }}
+### {{ conf.name }} — {{ conf.role }}
 
-*{{ conf.year }}*{% if conf.url != "" %} | [Link]({{ conf.url }}){% endif %}
+*{{ conf.year|period }}*{% if !conf.url.is_empty() %} · [{{ conf.url|host }}]({{ conf.url }}){% endif %}
 
-{{ conf.description }}
+{{ conf.description|md }}
 
-{% endfor %}
-
+{% endfor -%}
 ---
 
 ## Education
@@ -75,33 +74,33 @@
 {% for edu in education -%}
 ### {{ edu.institution }}
 
-**{{ edu.degree }}** in {{ edu.field }}
+**{{ edu.degree }}** — {{ edu.field }}
 
-*{{ edu.period }}*
+*{{ edu.period|period }}*
 
-{{ edu.description }}
+{{ edu.description|md }}
 
-{% endfor %}
-{% if !publications.is_empty() %}
+{% endfor -%}
+{% if !publications.is_empty() -%}
 ---
 
 ## Publications
 
-{% for pub in publications -%}
-### [{{ pub.title }}]({{ pub.url }})
+{% for publication in publications -%}
+### [{{ publication.title }}]({{ publication.url }})
 
-*{{ pub.year }}*
+*{{ publication.year }}*
 
-{{ pub.description }}
+{{ publication.description|md }}
 
-{% endfor %}
+{% endfor -%}
 {% endif -%}
-{% if !interests.is_empty() %}
+{% if !interests.is_empty() -%}
 ---
 
 ## Interests
 
 {% for interest in interests -%}
 - **{{ interest.name }}** — {{ interest.description }}
-{% endfor %}
+{% endfor -%}
 {% endif %}
