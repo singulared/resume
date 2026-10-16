@@ -11,7 +11,6 @@ use resume_macro::Project;
 /// Designed for real-time analytical queries on terabytes of data with caching, external data connector framework (spouts),
 /// and full-text search integration. Built with Rust, Tokio, Juniper/Async-GraphQL, Axum, and OpenTelemetry tracing.
 #[derive(Project)]
-#[project(parent = DigitalWave)]
 #[role(
     Developer,
     span(2024),
@@ -41,7 +40,7 @@ pub struct OLAP;
 /// and connectivity to data sources (OLAP, PostgreSQL, ClickHouse, Kafka). Built with Rust, Tokio, async-graphql, Axum,
 /// DataFusion (SQL frontend), and OpenTelemetry.
 #[derive(Project)]
-#[project(parent = DigitalWave)]
+#[project(name = "Domain Engine")]
 #[role(
     Developer,
     span(2024),

@@ -10,7 +10,6 @@ use resume_macro::Project;
 /// Users can lift these restrictions by paying.
 #[deprecated(since = "2017.1.1", note = "Closed")]
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(
     Developer,
     span(2015, 2017),
@@ -31,7 +30,6 @@ pub struct Paywall;
 /// A system that let mobile users disable advertisements for a small payment.
 #[deprecated(since = "2017.1.1", note = "Closed")]
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(
     Developer,
     span(2016, 2017),
@@ -46,7 +44,6 @@ pub struct AdBlock;
 /// Video recommendation [platform](https://web.archive.org/web/20180119134125/https://video.rambler.ru/).
 #[deprecated(since = "2018.1.1", note = "Closed")]
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(
     Developer,
     span(2017, 2017),
@@ -63,7 +60,6 @@ pub struct Video;
 /// * High latency of web components (API and front-end)
 /// * Stale news (mostly due to long caching)
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(
     Developer,
     span(2017, 2018),
@@ -101,7 +97,6 @@ pub struct News;
 ///
 /// Together with the team, I designed the entire API for the application and its admin part for news editors.
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(
     TeamLead,
     span(2020, 2021),
@@ -116,7 +111,6 @@ pub struct MediaUp;
 
 /// Rambler&Co service with [esoteric content](http://horoscopes.rambler.ru). (:
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(TeamLead, span(2018, 2022), langs(Python))]
 #[tech(databases::Postgresql, "Main data storage.")]
 #[tech(frameworks::Django, "The project was built on top of the Django web framework.")]
@@ -124,7 +118,6 @@ pub struct Horoscopes;
 
 /// Rambler&Co weather [forecast service](https://weather.rambler.ru).
 #[derive(Project)]
-#[project(parent = Rambler)]
 #[role(TeamLead, span(2018, 2022), langs(Python))]
 #[tech(databases::Postgresql, "Main data storage.")]
 #[tech(frameworks::Django, "The project was built on top of the Django web framework.")]

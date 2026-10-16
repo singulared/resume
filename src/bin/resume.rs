@@ -11,6 +11,7 @@
 use anyhow::{Context, Result};
 use askama::Template;
 use clap::{Args, Parser, Subcommand, ValueEnum};
+use resume::WorkHistory;
 use resume::resume_data::*;
 use std::collections::{BTreeMap, HashMap};
 use std::path::{Path, PathBuf};
@@ -227,26 +228,8 @@ fn collect_resume_data(verbose: bool) -> Result<ResumeData> {
         println!("🔍 Collecting resume data from inventory...");
     }
 
-    let mut work: Vec<WorkSection> = inventory::iter::<WorkSection>().cloned().collect();
-    let projects: Vec<Project> = inventory::iter::<Project>().cloned().collect();
-    let project_parents: Vec<ProjectParent> = inventory::iter::<ProjectParent>().cloned().collect();
-
-    // Group projects by their parent company key.
-    let mut parent_to_projects: HashMap<&str, Vec<Project>> = HashMap::new();
-    for parent in &project_parents {
-        if let Some(project) = projects.iter().find(|p| p.name == parent.project_name) {
-            parent_to_projects
-                .entry(parent.parent_company)
-                .or_default()
-                .push(project.clone());
-        }
-    }
-    for section in &mut work {
-        if let Some(projects) = parent_to_projects.get(section.key) {
-            section.projects = projects.clone();
-        }
-    }
-    work.sort_by(|a, b| b.period.cmp(&a.period));
+    // Companies and their projects in `WorkHistory` declaration order.
+    let work = WorkHistory::SECTIONS.to_vec();
 
     let mut opensource: Vec<OpenSourceProject> =
         inventory::iter::<OpenSourceProject>().cloned().collect();

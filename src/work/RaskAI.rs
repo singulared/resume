@@ -9,7 +9,6 @@ use resume_macro::Project;
 /// Core backend service handling video and audio processing, AI-powered translation and dubbing workflows.
 /// Built with Python, FastAPI, SQS, and DynamoDB.
 #[derive(Project)]
-#[project(parent = RaskAI)]
 #[role(
     Developer,
     span(2023, 2024),
@@ -35,7 +34,7 @@ pub struct Backend;
 /// to provide programmatic access to Rask AI's localization capabilities. Built with Python, FastAPI,
 /// PostgreSQL, RabbitMQ, and DynamoDB.
 #[derive(Project)]
-#[project(parent = RaskAI)]
+#[project(name = "Enterprise API")]
 #[role(
     Developer,
     span(2023, 2024),

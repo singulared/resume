@@ -48,9 +48,9 @@
             <h4>{{ project.name }}</h4>
             <div class="description">{{ project.description|markdownify|safe }}</div>
 
-            {% if !project.achievements.is_empty() %}
+            {% if !project.roles.is_empty() %}
             <div class="highlights">
-            {% for highlight in project.achievements %}{{ highlight|markdownify|safe }}{% endfor %}
+            {% for role in project.roles %}{{ role.doc|markdownify|safe }}{% endfor %}
             </div>
             {% endif %}
 

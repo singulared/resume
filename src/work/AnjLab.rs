@@ -10,7 +10,6 @@ use resume_macro::Project;
 /// Other companies can pay for access to aggregated data on a company's payment behavior before doing business with it, as an alternative to a traditional business credit report.
 #[deprecated(note = "Rewritten in Java")]
 #[derive(Project)]
-#[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(Python),
@@ -26,7 +25,6 @@ pub struct Satago;
 /// The data is presented as layers that can be stacked on top of each other and shown as flat figures or isolines.
 #[deprecated]
 #[derive(Project)]
-#[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CPP),
@@ -41,7 +39,6 @@ pub struct FlightMap;
 /// The tool can render cloud models in different visual styles, predict reagent dispersion, and save data for further analysis.
 #[deprecated]
 #[derive(Project)]
-#[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CPP),
@@ -57,7 +54,6 @@ pub struct CloudCube;
 /// and handles data communication between aircraft and the base.
 /// The system supports the exchange of special data such as digital maps, statistics, and meteorological reports.
 #[derive(Project)]
-#[project(parent = AnjLab)]
 #[role(
     Developer,
     langs(CS),

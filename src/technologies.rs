@@ -20,63 +20,73 @@ pub trait CRDT {}
 pub trait Cryptography {}
 pub trait DistributedSystems {}
 
+/// Declares technology traits, each with a display name for the template views
+/// (`Postgresql = "PostgreSQL"`; the ident when omitted). The name lives on a
+/// hidden `Technology` impl for `dyn Trait`, so rustdoc shows plain traits.
+macro_rules! technologies {
+    (@name $tech:ident $name:literal) => { $name };
+    (@name $tech:ident) => { stringify!($tech) };
+    ($($tech:ident $(= $name:literal)?),* $(,)?) => {$(
+        pub trait $tech {}
+        #[doc(hidden)]
+        impl crate::resume_data::Technology for dyn $tech {
+            const NAME: &'static str = technologies!(@name $tech $($name)?);
+        }
+    )*};
+}
+
 /// Programming languages
 pub mod languages {
     pub trait Languages: Rust + Python {}
-    pub trait Rust {}
-    pub trait Python {}
-    pub trait CPP {}
-    pub trait PHP {}
-    pub trait Erlang {}
-    pub trait CS {}
-    pub trait JS {}
+    technologies!(Rust, Python, CPP = "C++", PHP, Erlang, CS = "C#", JS = "JavaScript");
 }
 
 /// Databases
 pub mod databases {
-    pub trait Postgresql {}
-    pub trait Riak {}
-    pub trait Cassandra {}
-    pub trait MySQL {}
-    pub trait ClickHouse {}
-    pub trait Redis {}
-    pub trait DynamoDB {}
-    pub trait MongoDB {}
-    pub trait Neo4j {}
+    technologies!(
+        Postgresql = "PostgreSQL",
+        Riak,
+        Cassandra,
+        MySQL,
+        ClickHouse,
+        Redis,
+        DynamoDB,
+        MongoDB,
+        Neo4j,
+    );
 }
 
 /// Frameworks
 pub mod frameworks {
-    pub trait Actix {}
-    pub trait Axum {}
-    pub trait Tokio {}
-    pub trait AsyncIO {}
-    pub trait AioHTTP {}
-    pub trait FastAPI {}
-    pub trait Flask {}
-    pub trait Celery {}
-    pub trait Django {}
-    pub trait OpenGL {}
-    pub trait Qt {}
-    pub trait Poem {}
-    pub trait Kafka {}
-    pub trait Criterion {}
-    pub trait Cucumber {}
-    pub trait Tracing {}
-    pub trait Juniper {}
-    pub trait AsyncGraphQL {}
-    pub trait DataFusion {}
+    technologies!(
+        Actix,
+        Axum,
+        Tokio,
+        AsyncIO = "asyncio",
+        AioHTTP = "aiohttp",
+        FastAPI,
+        Flask,
+        Celery,
+        Django,
+        OpenGL,
+        Qt,
+        Poem,
+        Kafka,
+        Criterion,
+        Cucumber,
+        Tracing,
+        Juniper,
+        AsyncGraphQL = "async-graphql",
+        DataFusion,
+    );
 }
 
 /// Message brokers, event handling systems and RPCs.
 pub mod messages {
-    pub trait RabbitMQ {}
-    pub trait GRPC {}
-    pub trait SQS {}
+    technologies!(RabbitMQ, GRPC = "gRPC", SQS);
 }
 
 /// Working tools
 pub mod tools {
-    pub trait Linux {}
-    pub trait Neovim {}
+    technologies!(Linux, Neovim);
 }

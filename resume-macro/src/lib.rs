@@ -1,7 +1,10 @@
 use proc_macro::TokenStream;
 use quote::{format_ident, quote, ToTokens};
 use syn::{parse_macro_input, parse_quote, DeriveInput};
-use darling::{ast::NestedMeta, FromDeriveInput, FromMeta};
+use darling::{
+    ast::{Data, Fields, NestedMeta},
+    FromDeriveInput, FromField, FromMeta, FromVariant,
+};
 
 // Keep the original CleanupDocs macro
 #[proc_macro_derive(CleanupDocs)]
@@ -65,23 +68,40 @@ impl darling::FromMeta for Technology {
 
 // Helper functions
 
+/// The item's doc comment as Markdown. Like rustdoc, strips the indentation
+/// common to all lines rather than trimming each one, so nested lists survive.
 fn extract_docs(attrs: &[syn::Attribute]) -> String {
-    attrs
+    let lines: Vec<String> = attrs
         .iter()
         .filter_map(|attr| {
             if attr.path().is_ident("doc") {
                 if let syn::Meta::NameValue(nv) = &attr.meta {
                     if let syn::Expr::Lit(expr_lit) = &nv.value {
                         if let syn::Lit::Str(lit) = &expr_lit.lit {
-                            return Some(lit.value().trim().to_string());
+                            return Some(lit.value());
                         }
                     }
                 }
             }
             None
         })
+        // `split`, not `lines`: a blank `///` is an empty string and must stay a
+        // (paragraph-breaking) line.
+        .flat_map(|doc| doc.split('\n').map(str::to_string).collect::<Vec<_>>())
+        .collect();
+    let indent = lines
+        .iter()
+        .filter(|line| !line.trim().is_empty())
+        .map(|line| line.len() - line.trim_start().len())
+        .min()
+        .unwrap_or(0);
+    lines
+        .iter()
+        .map(|line| line.get(indent..).unwrap_or("").trim_end())
         .collect::<Vec<_>>()
         .join("\n")
+        .trim()
+        .to_string()
 }
 
 // ============================================================================
@@ -94,19 +114,23 @@ fn extract_docs(attrs: &[syn::Attribute]) -> String {
 // struct can carry several roles (e.g. Developer then TeamLead).
 //
 //     #[derive(Project)]
-//     #[project(parent = Rambler)]
+//     #[project(name = "Rambler News")]  // optional display name; defaults to the ident
 //     #[role(Developer, span(2017, 2018), langs(Python), doc = "…")]
 //     #[role(TeamLead,  span(2018, 2022), langs(Rust, Python), doc = "…")]
 //     #[tech(frameworks::Actix, "Actor & web framework.")]
 //     pub struct News;
+//
+// The company a project belongs to is the `WorkHistory` variant listing it
+// (see `#[derive(Work)]`), not an attribute here.
 // ============================================================================
 
-/// Parsed `#[project(parent = Company)]`.
+/// Parsed optional `#[project(name = "Display name")]`.
 #[derive(FromDeriveInput)]
 #[darling(attributes(project), supports(struct_any))]
 struct ProjectOpts {
     ident: syn::Ident,
-    parent: syn::Path,
+    #[darling(default)]
+    name: Option<String>,
 }
 
 /// Parsed `#[role(Trait, span(from, to), langs(A, B), param(Name), doc = "...")]`.
@@ -207,6 +231,19 @@ impl FromMeta for RoleSpec {
         }
 
         Ok(RoleSpec { role, from, to, langs, param, doc })
+    }
+}
+
+impl RoleSpec {
+    /// The span as the views print it: `2017-2018`, `2024-present`, `2017`,
+    /// or empty without a span.
+    fn period(&self) -> String {
+        match (self.from, self.to) {
+            (Some(from), Some(to)) if from == to => from.to_string(),
+            (Some(from), Some(to)) => format!("{from}-{to}"),
+            (Some(from), None) => format!("{from}-present"),
+            _ => String::new(),
+        }
     }
 }
 
@@ -312,36 +349,42 @@ impl ToTokens for AutoTraitCleanup<'_> {
     }
 }
 
-/// The two `inventory::submit!` blocks feeding the template/binary views.
-struct ProjectInventory {
+/// The hidden `WorkProject` impl feeding the template/binary views; collected
+/// in declaration order by `#[derive(Work)]`.
+struct ProjectConst<'a> {
+    ident: &'a syn::Ident,
     name: String,
-    parent: String,
     docs: String,
-    /// Per-role prose (the `doc` of each `#[role(...)]`), rendered as the
-    /// project's highlights in the markdown/HTML views.
-    highlights: Vec<String>,
-    tech_names: Vec<String>,
+    /// Some role has an open-ended span (`span(2024)`).
+    ongoing: bool,
+    /// `(period, doc)` of each `#[role(...)]` that has a doc.
+    roles: Vec<(String, String)>,
+    techs: Vec<&'a syn::Path>,
 }
 
-impl ToTokens for ProjectInventory {
+impl ToTokens for ProjectConst<'_> {
     fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
-        let Self { name, parent, docs, highlights, tech_names } = self;
-        let highlights = highlights.iter();
-        let techs = tech_names.iter();
+        let Self { ident, name, docs, ongoing, roles, techs } = self;
+        let key = ident.to_string();
+        let roles = roles.iter().map(|(period, doc)| {
+            quote! { crate::resume_data::ProjectRole { period: #period, doc: #doc } }
+        });
+        // Display names come from the technology traits themselves (see
+        // `technologies!`), so `Postgresql` renders as "PostgreSQL" everywhere.
+        let techs = techs.iter().map(|path| {
+            quote! { <dyn crate::technologies::#path as crate::resume_data::Technology>::NAME }
+        });
         tokens.extend(quote! {
-            inventory::submit! {
-                crate::resume_data::Project {
+            #[doc(hidden)]
+            impl crate::resume_data::WorkProject for #ident {
+                const PROJECT: crate::resume_data::Project = crate::resume_data::Project {
+                    key: #key,
                     name: #name,
                     description: #docs,
-                    achievements: &[#(#highlights),*],
+                    ongoing: #ongoing,
+                    roles: &[#(#roles),*],
                     technologies: &[#(#techs),*],
-                }
-            }
-            inventory::submit! {
-                crate::resume_data::ProjectParent {
-                    project_name: #name,
-                    parent_company: #parent,
-                }
+                };
             }
         });
     }
@@ -350,8 +393,8 @@ impl ToTokens for ProjectInventory {
 /// Derive macro for projects within work sections.
 ///
 /// Builds the rustdoc trait impls (technologies + one impl per `#[role(...)]`)
-/// and the inventory submissions from attributes. See the module comment above
-/// for the attribute syntax.
+/// and the hidden `WorkProject` data impl from attributes. See the module
+/// comment above for the attribute syntax.
 #[proc_macro_derive(Project, attributes(project, role, tech))]
 pub fn derive_project(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
@@ -384,14 +427,8 @@ pub fn derive_project(input: TokenStream) -> TokenStream {
     };
 
     let ident = &opts.ident;
-    let name = ident.to_string();
+    let name = opts.name.clone().unwrap_or_else(|| ident.to_string());
     let docs = extract_docs(&input.attrs);
-    let parent = opts
-        .parent
-        .segments
-        .last()
-        .map(|s| s.ident.to_string())
-        .unwrap_or_default();
 
     // Build the ToTokens parts, then compose them. A `#[tech(...)]` without a
     // description yields a doc-less impl — no catalog fallback, so generic
@@ -460,90 +497,99 @@ pub fn derive_project(input: TokenStream) -> TokenStream {
         })
         .collect();
 
-    let tech_names: Vec<String> = techs
-        .iter()
-        .map(|tech| {
-            tech.path
-                .segments
-                .last()
-                .map(|s| s.ident.to_string())
-                .unwrap_or_default()
-        })
-        .collect();
-    let highlights: Vec<String> = roles
-        .iter()
-        .map(|spec| spec.doc.clone())
-        .filter(|doc| !doc.is_empty())
-        .collect();
-    let inventory = ProjectInventory { name, parent, docs, highlights, tech_names };
+    let project = ProjectConst {
+        ident,
+        name,
+        docs,
+        ongoing: roles.iter().any(|spec| spec.from.is_some() && spec.to.is_none()),
+        roles: roles
+            .iter()
+            .filter(|spec| !spec.doc.is_empty())
+            .map(|spec| (spec.period(), spec.doc.clone()))
+            .collect(),
+        techs: techs.iter().map(|tech| &tech.path).collect(),
+    };
     let cleanup = AutoTraitCleanup { ident };
 
     TokenStream::from(quote! {
-        #inventory
+        #project
         #(#tech_impls)*
         #(#role_impls)*
         #cleanup
     })
 }
 
-/// Parsed `#[company(key = Ident, name = "...", url = "...", role = "...", period = "...")]`.
-#[derive(FromDeriveInput)]
-#[darling(attributes(company), supports(struct_any))]
+/// Parsed `#[company(name = "...", url = "...", role = "...", period = "...", summary = "...")]`
+/// on a work-history variant; the variant's tuple fields are its project types.
+#[derive(FromVariant)]
+#[darling(attributes(company))]
 struct CompanyOpts {
-    #[allow(dead_code)]
-    ident: syn::Ident,
-    key: syn::Path,
+    fields: Fields<CompanyProject>,
     name: String,
     url: String,
     role: String,
     period: String,
+    summary: String,
 }
 
-/// Derive macro for a company / work section.
-///
-/// Submits a [`crate::resume_data::WorkSection`] to inventory. `key` is the join
-/// key matched against each project's `parent`; the struct's doc comment becomes
-/// the section description. Apply it to a private marker struct.
-///
-/// ```ignore
-/// #[derive(Company)]
-/// #[company(key = Rambler, name = "Rambler&Co", url = "https://rambler.ru",
-///           role = "Team Lead & Software Engineer", period = "2015-2022")]
-/// /// One of the biggest media holdings in Russia.
-/// struct Rambler;
-/// ```
-#[proc_macro_derive(Company, attributes(company))]
-pub fn derive_company(input: TokenStream) -> TokenStream {
-    let input = parse_macro_input!(input as DeriveInput);
+#[derive(FromField)]
+struct CompanyProject {
+    ty: syn::Type,
+}
 
-    let opts = match CompanyOpts::from_derive_input(&input) {
-        Ok(opts) => opts,
-        Err(e) => return TokenStream::from(e.write_errors()),
-    };
+#[derive(FromDeriveInput)]
+#[darling(supports(enum_any))]
+struct WorkOpts {
+    ident: syn::Ident,
+    data: Data<CompanyOpts, ()>,
+}
 
-    let key = opts
-        .key
-        .segments
-        .last()
-        .map(|s| s.ident.to_string())
-        .unwrap_or_default();
-    let name = &opts.name;
-    let url = &opts.url;
-    let role = &opts.role;
-    let period = &opts.period;
-    let docs = extract_docs(&input.attrs);
-
-    TokenStream::from(quote! {
-        inventory::submit! {
+impl ToTokens for CompanyOpts {
+    fn to_tokens(&self, tokens: &mut proc_macro2::TokenStream) {
+        let Self { fields, name, url, role, period, summary } = self;
+        let projects = fields.iter().map(|project| &project.ty);
+        tokens.extend(quote! {
             crate::resume_data::WorkSection {
-                key: #key,
                 company: #name,
                 url: #url,
                 role: #role,
                 period: #period,
-                description: #docs,
-                projects: Vec::new(),
+                description: #summary,
+                projects: &[#(<#projects as crate::resume_data::WorkProject>::PROJECT),*],
             }
+        });
+    }
+}
+
+/// Derive for the work-history enum ("typed root"): one variant per company,
+/// its tuple fields the `#[derive(Project)]` types, in display order.
+///
+/// Emits a hidden `WorkRoot` impl whose `SECTIONS` follow declaration order, so
+/// the views list companies and projects exactly as rustdoc does, and a listed
+/// type without `#[derive(Project)]` fails to compile.
+///
+/// ```ignore
+/// #[derive(Work)]
+/// pub enum WorkHistory {
+///     /// [Rambler&Co:](self::Rambler) *2015 - 2022*
+///     #[company(name = "Rambler&Co", url = "https://rambler.ru", role = "Team Lead",
+///               period = "2015-2022", summary = "One of the biggest media holdings in Russia.")]
+///     Rambler(News, MediaUp),
+/// }
+/// ```
+#[proc_macro_derive(Work, attributes(company))]
+pub fn derive_work(input: TokenStream) -> TokenStream {
+    let input = parse_macro_input!(input as DeriveInput);
+    let opts = match WorkOpts::from_derive_input(&input) {
+        Ok(opts) => opts,
+        Err(e) => return TokenStream::from(e.write_errors()),
+    };
+    let ident = &opts.ident;
+    let sections = opts.data.take_enum().unwrap_or_default();
+    TokenStream::from(quote! {
+        #[doc(hidden)]
+        impl crate::resume_data::WorkRoot for #ident {
+            const SECTIONS: &'static [crate::resume_data::WorkSection] = &[#(#sections),*];
         }
     })
 }
@@ -566,29 +612,32 @@ fn default_oss_rank() -> u32 {
     1000
 }
 
-/// Drop a leading Markdown link such as `[name](url) - ` from an open-source doc
-/// comment, since the rendered heading already shows the linked project name.
-fn strip_leading_link(doc: &str) -> String {
+/// Split a leading Markdown link such as `[name](url) - ` off an open-source doc
+/// comment: the link text is the project's display name, and the rendered
+/// heading already links it, so the rest is the description.
+fn split_leading_link(doc: &str) -> (Option<String>, String) {
     let trimmed = doc.trim_start();
-    if !trimmed.starts_with('[') {
-        return doc.to_string();
-    }
-    let Some(text_end) = trimmed.find("](") else {
-        return doc.to_string();
+    let Some(text) = trimmed.strip_prefix('[') else {
+        return (None, doc.to_string());
     };
-    let after_text = &trimmed[text_end + 2..];
+    let Some(text_end) = text.find("](") else {
+        return (None, doc.to_string());
+    };
+    let after_text = &text[text_end + 2..];
     let Some(url_end) = after_text.find(')') else {
-        return doc.to_string();
+        return (None, doc.to_string());
     };
-    after_text[url_end + 1..]
+    let rest = after_text[url_end + 1..]
         .trim_start()
         .trim_start_matches(|c: char| c == '-' || c == '—' || c == ':')
         .trim_start()
-        .to_string()
+        .to_string();
+    (Some(text[..text_end].to_string()), rest)
 }
 
 /// Derive for an open-source project. Submits an [`crate::resume_data::OpenSourceProject`]
-/// to inventory; the project name is the struct ident and the description is its doc comment.
+/// to inventory. The display name is the text of the doc comment's leading link
+/// (falling back to the struct ident); the description is the rest of the doc.
 #[proc_macro_derive(Oss, attributes(oss))]
 pub fn derive_oss(input: TokenStream) -> TokenStream {
     let input = parse_macro_input!(input as DeriveInput);
@@ -596,9 +645,8 @@ pub fn derive_oss(input: TokenStream) -> TokenStream {
         Ok(opts) => opts,
         Err(e) => return TokenStream::from(e.write_errors()),
     };
-    let name = opts.ident.to_string();
-    // The heading already shows the linked name; drop a leading `[name](url) - `.
-    let description = strip_leading_link(&extract_docs(&input.attrs));
+    let (name, description) = split_leading_link(&extract_docs(&input.attrs));
+    let name = name.unwrap_or_else(|| opts.ident.to_string());
     let url = &opts.url;
     let role = &opts.role;
     let rank = opts.rank;

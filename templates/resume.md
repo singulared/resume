@@ -31,11 +31,9 @@
 
 {{ project.description }}
 
-{% if !project.achievements.is_empty() -%}
-{% for highlight in project.achievements %}{{ highlight }}
+{% for role in project.roles %}{{ role.doc }}
 
 {% endfor -%}
-{% endif -%}
 {% if !project.technologies.is_empty() -%}
 **Technologies:** {{ project.technologies.join(", ") }}
 

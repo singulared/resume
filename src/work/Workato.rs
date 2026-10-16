@@ -9,7 +9,6 @@ use resume_macro::Project;
 /// Table storage provider used in automation processes (main product). Based on PostgreSQL or MySQL engines
 /// (PostgreSQL is primary) with custom API and query planning for performance and predictable behavior.
 #[derive(Project)]
-#[project(parent = Workato)]
 #[role(
     Developer,
     span(2022, 2023),
@@ -40,7 +39,6 @@ pub struct WorkatoDB;
 /// in PostgreSQL and larger files in S3. Provides a unified interface for the Workato platform including file storage
 /// operations, streaming, billing, and storage usage statistics.
 #[derive(Project)]
-#[project(parent = Workato)]
 #[role(
     Developer,
     span(2022, 2023),
@@ -64,7 +62,6 @@ pub struct WorkatoFiles;
 /// Event exchange and subscription platform built on Kafka, with a simplified interface implemented in Poem.
 /// Provides event streaming capabilities for integration workflows.
 #[derive(Project)]
-#[project(parent = Workato)]
 #[role(
     Developer,
     span(2022, 2023),
