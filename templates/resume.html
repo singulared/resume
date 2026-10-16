@@ -20,6 +20,11 @@
 <body>
 
 <div class="appbar" id="appbar" aria-label="Appearance">
+  <nav class="appbar-links" aria-label="Other formats">
+    <a href="resume/index.html">Rustdoc</a>
+    <a href="resume.pdf">PDF</a>
+    <a href="resume.md">Markdown</a>
+  </nav>
   <button type="button" class="appbar-toggle" id="appbar-toggle" aria-haspopup="true" aria-expanded="false" aria-label="Appearance settings" title="Appearance">Aa</button>
   <div class="appbar-pop" id="appbar-pop" role="dialog" aria-label="Appearance" hidden>
     <div class="pop-label">Style</div>
@@ -39,6 +44,15 @@
     <div class="pop-theme" role="radiogroup" aria-label="Theme">
       <button type="button" role="radio" data-theme-set="light"><span class="pop-ic">☀</span>Light</button>
       <button type="button" role="radio" data-theme-set="dark"><span class="pop-ic">☾</span>Dark</button>
+    </div>
+    <div class="pop-formats">
+      <div class="pop-div"></div>
+      <div class="pop-label">Formats</div>
+      <nav class="pop-links" aria-label="Other formats">
+        <a href="resume/index.html">Rustdoc</a>
+        <a href="resume.pdf">PDF</a>
+        <a href="resume.md">Markdown</a>
+      </nav>
     </div>
   </div>
 </div>

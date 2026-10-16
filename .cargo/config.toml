@@ -1,2 +1,2 @@
 [build]
-rustdocflags = ["--html-in-header=analytics.html","--html-in-header=og-meta.html", "--extend-css=no-blanket.css", "--default-theme=ayu"]
+rustdocflags = ["--html-in-header=analytics.html","--html-in-header=og-meta.html", "--html-before-content=formats.html", "--extend-css=no-blanket.css", "--default-theme=ayu"]
