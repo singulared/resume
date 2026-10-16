@@ -40,8 +40,8 @@ pub const LINKEDIN: &str = "https://www.linkedin.com/in/singulared/";
 /// [work@singulared.space](mailto:work@singulared.space)
 pub const EMAIL: &str = "work@singulared.space";
 
-/// [+79190007134](tel:+79190007134)
-pub const PHONE: u64 = 79190007134;
+/// [+995 598 32 58 81](tel:+995598325881)
+pub const PHONE: u64 = 995598325881;
 
 /// 28.12.1988
 pub const BIRTHDATE: &str = "28-12-1988";
@@ -68,7 +68,7 @@ pub use work::WorkHistory;
     // Keep in sync with the intro of README.md (`resume check` verifies).
     summary = "Systems and backend engineer since 2008, working mostly in Rust (since 2018) and Python. I build databases, caching layers and high-load services. I led the rewrite of Rambler News, moving its core API to Rust and cutting latency by about 10× and resource costs by about 20×. Author of the Hitbox caching framework and one of the program directors of RustCon Russia. Now working on the OLAP database and Domain Engine at Digital Wave Technology.",
     email = "work@singulared.space",
-    phone = "+7 919 000 7134",
+    phone = "+995 598 32 58 81",
     telegram = "@singulared",
     github = "https://github.com/singulared",
     linkedin = "https://www.linkedin.com/in/singulared/"

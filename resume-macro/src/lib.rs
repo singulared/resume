@@ -789,7 +789,7 @@ struct ProfileOpts {
     tagline: String,
     summary: String,
     email: String,
-    /// As displayed, e.g. `+7 919 000 7134`.
+    /// As displayed, e.g. `+995 598 32 58 81`.
     phone: String,
     telegram: String,
     github: String,

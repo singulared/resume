@@ -136,7 +136,7 @@ pub struct Profile {
     /// Intro paragraph; also the intro of README.md (`resume check` verifies).
     pub summary: &'static str,
     pub email: &'static str,
-    /// As displayed, e.g. `+7 919 000 7134`.
+    /// As displayed, e.g. `+995 598 32 58 81`.
     pub phone: &'static str,
     pub telegram: &'static str,
     pub github: &'static str,
