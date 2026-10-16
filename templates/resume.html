@@ -22,6 +22,8 @@
 
 <blockquote>{{ personal.tagline }}</blockquote>
 
+<p class="summary">{{ personal.summary }}</p>
+
 <div class="contact-info">
     <ul>
         <li><strong>Email:</strong> <a href="mailto:{{ personal.email }}">{{ personal.email }}</a></li>
@@ -29,7 +31,6 @@
         <li><strong>Telegram:</strong> {{ personal.telegram }}</li>
         <li><strong>GitHub:</strong> <a href="{{ personal.github }}">{{ personal.github }}</a></li>
         <li><strong>LinkedIn:</strong> <a href="{{ personal.linkedin }}">{{ personal.linkedin }}</a></li>
-        <li><strong>Birth Date:</strong> {{ personal.birthdate }}</li>
     </ul>
     <p><strong>Skills:</strong> {{ personal.skills.join(", ") }}</p>
 </div>

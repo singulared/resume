@@ -17,12 +17,12 @@ pub struct Resume {
 pub struct PersonalInfo {
     pub name: &'static str,
     pub tagline: &'static str,
+    pub summary: &'static str,
     pub email: &'static str,
     pub phone: &'static str,
     pub telegram: &'static str,
     pub github: &'static str,
     pub linkedin: &'static str,
-    pub birthdate: &'static str,
     pub skills: Vec<&'static str>,
 }
 
@@ -133,12 +133,14 @@ pub struct Interest {
 pub struct Profile {
     pub name: &'static str,
     pub tagline: &'static str,
+    /// Intro paragraph; also the intro of README.md (`resume check` verifies).
+    pub summary: &'static str,
     pub email: &'static str,
+    /// As displayed, e.g. `+7 919 000 7134`.
     pub phone: &'static str,
     pub telegram: &'static str,
     pub github: &'static str,
     pub linkedin: &'static str,
-    pub birthdate: &'static str,
     pub skills: &'static [&'static str],
 }
 

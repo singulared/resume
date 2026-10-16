@@ -2,6 +2,8 @@
 
 > {{ personal.tagline }}
 
+{{ personal.summary }}
+
 ---
 
 ## Contact Information
@@ -11,7 +13,6 @@
 - **Telegram:** {{ personal.telegram }}
 - **GitHub:** [{{ personal.github }}]({{ personal.github }})
 - **LinkedIn:** [{{ personal.linkedin }}]({{ personal.linkedin }})
-- **Birth Date:** {{ personal.birthdate }}
 
 **Skills:** {{ personal.skills.join(", ") }}
 

@@ -65,12 +65,13 @@ pub use work::WorkHistory;
 #[profile(
     name = "Maxim Belousov",
     tagline = "Rustacean, Crypto-anarchist and Techno-punk",
+    // Keep in sync with the intro of README.md (`resume check` verifies).
+    summary = "Systems and backend engineer since 2008, working mostly in Rust (since 2018) and Python. I build databases, caching layers and high-load services. I led the rewrite of Rambler News, moving its core API to Rust and cutting latency by about 10× and resource costs by about 20×. Author of the Hitbox caching framework and one of the program directors of RustCon Russia. Now working on the OLAP database and Domain Engine at Digital Wave Technology.",
     email = "work@singulared.space",
-    phone = "+79190007134",
+    phone = "+7 919 000 7134",
     telegram = "@singulared",
     github = "https://github.com/singulared",
-    linkedin = "https://www.linkedin.com/in/singulared/",
-    birthdate = "28.12.1988"
+    linkedin = "https://www.linkedin.com/in/singulared/"
 )]
 #[skill("Rust")]
 #[skill("Python")]

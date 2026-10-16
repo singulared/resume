@@ -252,12 +252,12 @@ fn collect_resume_data(verbose: bool) -> Result<ResumeData> {
     let personal = PersonalInfo {
         name: profile.name,
         tagline: profile.tagline,
+        summary: profile.summary,
         email: profile.email,
         phone: profile.phone,
         telegram: profile.telegram,
         github: profile.github,
         linkedin: profile.linkedin,
-        birthdate: profile.birthdate,
         skills: profile.skills.to_vec(),
     };
 
@@ -482,12 +482,30 @@ fn run_check(data: &ResumeData) -> Result<()> {
         }
     }
 
-    if empty.is_empty() {
-        println!("\nAll sections populated.");
-        Ok(())
+    // README.md is the rustdoc front page; its intro must be the profile summary.
+    let readme_in_sync = squash_whitespace(README).contains(&squash_whitespace(data.personal.summary));
+    if readme_in_sync {
+        println!("✓ README intro matches #[profile(summary)]");
     } else {
+        println!("✗ README intro differs from #[profile(summary)]");
+    }
+
+    if !empty.is_empty() {
         anyhow::bail!("empty section(s): {}", empty.join(", "));
     }
+    if !readme_in_sync {
+        anyhow::bail!("README.md does not contain the profile summary");
+    }
+    println!("\nAll sections populated.");
+    Ok(())
+}
+
+/// The README, for checking it against the profile summary.
+const README: &str = include_str!("../../README.md");
+
+/// Collapse whitespace runs to single spaces, so line wrapping doesn't matter.
+fn squash_whitespace(text: &str) -> String {
+    text.split_whitespace().collect::<Vec<_>>().join(" ")
 }
 
 /// Fetch the star count for `owner/repo` from the GitHub API via `curl`.

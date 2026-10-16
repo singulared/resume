@@ -779,7 +779,7 @@ pub fn derive_publication(input: TokenStream) -> TokenStream {
     })
 }
 
-/// Parsed `#[profile(name = "...", tagline = "...", email = "...", ...)]`.
+/// Parsed `#[profile(name = "...", tagline = "...", summary = "...", email = "...", ...)]`.
 #[derive(FromDeriveInput)]
 #[darling(attributes(profile), supports(struct_any))]
 struct ProfileOpts {
@@ -787,12 +787,13 @@ struct ProfileOpts {
     ident: syn::Ident,
     name: String,
     tagline: String,
+    summary: String,
     email: String,
+    /// As displayed, e.g. `+7 919 000 7134`.
     phone: String,
     telegram: String,
     github: String,
     linkedin: String,
-    birthdate: String,
 }
 
 /// Derive for the profile / contact block. Submits a single
@@ -818,24 +819,24 @@ pub fn derive_profile(input: TokenStream) -> TokenStream {
 
     let name = &opts.name;
     let tagline = &opts.tagline;
+    let summary = &opts.summary;
     let email = &opts.email;
     let phone = &opts.phone;
     let telegram = &opts.telegram;
     let github = &opts.github;
     let linkedin = &opts.linkedin;
-    let birthdate = &opts.birthdate;
     let skills = skills.iter();
     TokenStream::from(quote! {
         inventory::submit! {
             crate::resume_data::Profile {
                 name: #name,
                 tagline: #tagline,
+                summary: #summary,
                 email: #email,
                 phone: #phone,
                 telegram: #telegram,
                 github: #github,
                 linkedin: #linkedin,
-                birthdate: #birthdate,
                 skills: &[#(#skills),*],
             }
         }
