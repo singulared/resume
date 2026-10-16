@@ -26,6 +26,9 @@ jobs:
         run: cargo run --bin resume -- check
       - name: Build docs
         run: cargo doc --no-deps --verbose
+      # Deployed next to the rustdoc; the format links on both expect this layout.
+      - name: Build HTML, PDF and Markdown
+        run: cargo run --bin resume -- generate --output target/doc --stars stars.json --verbose
       - name: SSH setup
         if: github.ref == 'refs/heads/main'
         env:

@@ -16,6 +16,7 @@ use resume::resume_data::*;
 use serde::Deserialize;
 use std::cmp::Ordering;
 use std::collections::{BTreeMap, HashMap};
+use std::io::ErrorKind;
 use std::path::{Path, PathBuf};
 use std::process::Command;
 use std::time::Duration;
@@ -309,7 +310,8 @@ struct GenerateArgs {
     #[arg(short, long, value_enum, default_value = "all")]
     format: OutputFormat,
 
-    /// Output directory.
+    /// Output directory. The format links assume `target/doc`, next to the
+    /// rustdoc, which is where CI deploys from.
     #[arg(short, long, default_value = "target")]
     output: PathBuf,
 
@@ -513,23 +515,32 @@ fn generate_html(
     Ok(output_path)
 }
 
+/// Chromium-based browsers tried, in order, for `--print-to-pdf`.
+const BROWSERS: &[&str] = &["chromium", "chromium-browser", "google-chrome", "google-chrome-stable"];
+
 fn generate_pdf(html_path: &Path, output_dir: &Path, verbose: bool) -> Result<PathBuf> {
     if verbose {
         println!("\n📄 Generating PDF...");
     }
     let pdf_path = output_dir.join("resume.pdf");
-    let output = Command::new("chromium")
-        .args([
-            "--headless",
-            "--disable-gpu",
-            &format!("--print-to-pdf={}", pdf_path.display()),
-            "--no-pdf-header-footer",
-            html_path.to_str().context("Invalid HTML path")?,
-        ])
-        .output()
-        .context("Failed to execute chromium. Make sure chromium is installed.")?;
+    let args = [
+        "--headless",
+        "--disable-gpu",
+        &format!("--print-to-pdf={}", pdf_path.display()),
+        "--no-pdf-header-footer",
+        html_path.to_str().context("Invalid HTML path")?,
+    ];
+    // The first browser on PATH prints the PDF.
+    let (browser, output) = BROWSERS
+        .iter()
+        .find_map(|&browser| match Command::new(browser).args(args).output() {
+            Err(err) if err.kind() == ErrorKind::NotFound => None,
+            output => Some((browser, output)),
+        })
+        .with_context(|| format!("No browser to print the PDF (tried {})", BROWSERS.join(", ")))?;
+    let output = output.with_context(|| format!("Failed to execute {browser}"))?;
     if !output.status.success() {
-        bail!("Chromium failed: {}", String::from_utf8_lossy(&output.stderr));
+        bail!("{browser} failed: {}", String::from_utf8_lossy(&output.stderr));
     }
     if verbose {
         println!("   ✓ {}", pdf_path.display());

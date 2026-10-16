@@ -20,6 +20,8 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Star counts shown as text (★ 2.6k) instead of shields.io badges; zero counts hidden
 - resume-macro ported to syn 2 and darling
 - Toolchain pinned to nightly-2026-10-07; CI checks pull requests and deploys only from main
+- CI builds the HTML, PDF and Markdown and deploys them next to the rustdoc
+- PDF printing falls back to Google Chrome when Chromium isn't installed
 - Language pass over the resume content; concrete scope for the Digital Wave and Rambler roles
 
 ### Fixed
