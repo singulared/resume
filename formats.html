@@ -22,6 +22,11 @@
 }
 .resume-formats a + a { border-left: 1px solid var(--border-color); }
 .resume-formats a:hover, .resume-formats a:focus-visible { color: var(--link-color); }
+/* Top-right like the HTML page once the margin clears rustdoc's own toolbar,
+   which ends at 1205px (sidebar + capped content width). */
+@media (min-width: 1440px) {
+    .resume-formats { top: 18px; bottom: auto; }
+}
 @media (max-width: 700px) {
     .resume-formats { right: 12px; bottom: 12px; }
 }
