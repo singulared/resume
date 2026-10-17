@@ -1,0 +1,46 @@
+<!-- Floating links to the other resume formats, which CI generates next to the rustdoc. -->
+<style>
+.resume-formats {
+    position: fixed;
+    right: 18px;
+    bottom: 18px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    height: 40px;
+    padding: 0 4px;
+    border: 1px solid var(--border-color);
+    border-radius: 11px;
+    background: var(--main-background-color);
+    box-shadow: 0 1px 2px rgba(0, 0, 0, 0.1), 0 6px 18px rgba(0, 0, 0, 0.2);
+    font: 500 14px/1 "Fira Sans", Arial, NanumBarunGothic, sans-serif;
+}
+.resume-formats a {
+    padding: 4px 10px;
+    color: var(--main-color);
+    text-decoration: none;
+}
+.resume-formats a + a { border-left: 1px solid var(--border-color); }
+.resume-formats a:hover, .resume-formats a:focus-visible { color: var(--link-color); }
+@media (max-width: 700px) {
+    .resume-formats { right: 12px; bottom: 12px; }
+}
+@media print {
+    .resume-formats { display: none; }
+}
+</style>
+<nav class="resume-formats" aria-label="Other formats">
+    <a href="/resume.html" data-file="resume.html">HTML</a>
+    <a href="/resume.pdf" data-file="resume.pdf">PDF</a>
+    <a href="/resume.md" data-file="resume.md">Markdown</a>
+</nav>
+<script>
+// Resolve against the doc root so the links also work from file:// and nested pages.
+(function () {
+    var vars = document.querySelector('meta[name="rustdoc-vars"]');
+    if (!vars) return;
+    document.querySelectorAll('.resume-formats a').forEach(function (a) {
+        a.href = vars.dataset.rootPath + a.dataset.file;
+    });
+})();
+</script>
