@@ -18,8 +18,8 @@ jobs:
       - name: Install Rust
         uses: actions-rust-lang/setup-rust-toolchain@v1
         with:
-          # The action defaults to deny; keep warnings as annotations.
-          build-warnings: warn
+          # The action defaults RUSTFLAGS to "-D warnings"; keep warnings as annotations.
+          rustflags: ""
       - name: Clippy
         run: cargo clippy --all-features
       - name: Check resume data
