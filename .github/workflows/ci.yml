@@ -26,6 +26,9 @@ jobs:
         run: cargo run --bin resume -- check
       - name: Build docs
         run: cargo doc --no-deps --verbose
+      # Ubuntu 24.04 blocks the unprivileged user namespaces Chromium's sandbox needs.
+      - name: Allow Chromium sandbox
+        run: sudo sysctl -w kernel.apparmor_restrict_unprivileged_userns=0
       # Deployed next to the rustdoc; the format links on both expect this layout.
       - name: Build HTML, PDF and Markdown
         run: cargo run --bin resume -- generate --output target/doc --stars stars.json --verbose
